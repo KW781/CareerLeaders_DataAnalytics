@@ -1,6 +1,3 @@
-table1 = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx'));
-table2 = table2cell(readtable('Recruit survey 2021 all responses data (1).xlsx'));
-
 disp('Drop-in Analysis Plots')
 disp('1. Plot of first time drop-in students');
 disp('2. Plot of drop-in attendance purposes');
@@ -15,26 +12,19 @@ plot_number = input('Enter which number plot you want: ');
 
 switch plot_number
     case 1
-        clear table2;
-        FirstTimePlot(table1);
+        FirstTimePlot();
     case 2
-        clear table2;
-        AttendancePurposePlot(table1);
+        AttendancePurposePlot();
     case 3
-        clear table2;
-        FoundOutMethodPlot(table1);
+        FoundOutMethodPlot();
     case 4
-        clear table2;
-        RolePlot(table1);
+        RolePlot();
     case 5
-        clear table2;
-        YearLevelPlot(table1);
+        YearLevelPlot();
     case 6
-        clear table2;
-        OrganisationPlot(table1);
+        OrganisationPlot();
     case 7
-        clear table1;
-        RoleApplicationPlot(table2);
+        RoleApplicationPlot();
 end
 
 

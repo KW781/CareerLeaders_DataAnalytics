@@ -1,4 +1,6 @@
-function [] = YearLevelPlot(table)
+function [] = YearLevelPlot()
+    table = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx'));
+
     dimensions = size(table);
     num_students = dimensions(1);
     year_levels = {'First year', 'Second year', 'Third year', 'Third year+', 'Masters', 'PhD', 'Other'};
@@ -35,7 +37,9 @@ function [] = YearLevelPlot(table)
     ordinal_final_year_levels = reordercats(ordinal_final_year_levels, final_year_levels);
     
     %plot the data
-    bar(ordinal_final_year_levels, year_level_proportions);
+    colours = rand(length(ordinal_final_year_levels), 3); %generate the colours for the bars
+    bar_plot = bar(ordinal_final_year_levels, year_level_proportions, 'facecolor', 'flat');
+    bar_plot.CData = colours; %colour in the bars in the plot
     text(1 : length(year_level_proportions),...
         year_level_proportions,...
         num2str(year_level_proportions'),...

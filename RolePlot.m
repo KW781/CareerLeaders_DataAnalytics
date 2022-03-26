@@ -1,4 +1,6 @@
-function [] = RolePlot(table)
+function [] = RolePlot()
+    table = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx'));
+
     dimensions = size(table);
     num_students = dimensions(1);
     roles = {'Internship', 'Grad role', 'Part-time job', 'Full-time job', 'Scholarship', 'P2B'};
@@ -68,7 +70,9 @@ function [] = RolePlot(table)
     ordinal_final_roles = reordercats(ordinal_final_roles, final_roles);
     
     %plot the data
-    bar(ordinal_final_roles, role_proportions);
+    colours = rand(length(ordinal_final_roles), 3); %generate the colours for the bars
+    bar_plot = bar(ordinal_final_roles, role_proportions, 'facecolor', 'flat');
+    bar_plot.CData = colours; %colours in the bars in the plot
     text(1 : length(role_proportions),...
         role_proportions,...
         num2str(role_proportions'),...

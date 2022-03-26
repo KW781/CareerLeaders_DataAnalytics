@@ -1,4 +1,6 @@
-function [] = FoundOutMethodPlot(table)
+function [] = FoundOutMethodPlot()
+    table = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx'));
+
     dimensions = size(table);
     num_students = dimensions(1);
     methods = {'Business School Website', 'BizStudent Update (email)', 'Workshop or event', 'Plasma screen'};
@@ -49,7 +51,9 @@ function [] = FoundOutMethodPlot(table)
     ordinal_final_methods = reordercats(ordinal_final_methods, final_methods);
     
     %plot the data
-    bar(ordinal_final_methods, method_proportions);
+    colours = rand(length(ordinal_final_methods), 3); %generate the colours for the bars
+    bar_plot = bar(ordinal_final_methods, method_proportions, 'facecolor', 'flat');
+    bar_plot.CData = colours; %colour in the bars in the plot
     text(1 : length(method_proportions),...
         method_proportions,...
         num2str(method_proportions'),...

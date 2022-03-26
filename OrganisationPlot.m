@@ -1,4 +1,6 @@
-function [] = OrganisationPlot(table)
+function [] = OrganisationPlot()
+    table = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx'));
+
     dimensions = size(table);
     num_students = dimensions(1);
     organisations = {'P2B'}; %initialise organisations cell array to be populated, with at first just P2B
@@ -68,7 +70,9 @@ function [] = OrganisationPlot(table)
     ordinal_final_organisations = reordercats(ordinal_final_organisations, final_organisations);
     
     %plot the data
-    bar(ordinal_final_organisations, organisation_proportions);
+    colours = rand(length(ordinal_final_organisations), 3); %generate the colours for the bars
+    bar_plot = bar(ordinal_final_organisations, organisation_proportions, 'facecolor', 'flat');
+    bar_plot.CData = colours; %colour in the bars in the plot
     text(1 : length(organisation_proportions),...
         organisation_proportions,...
         num2str(organisation_proportions'),...

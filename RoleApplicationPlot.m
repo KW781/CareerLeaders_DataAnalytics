@@ -1,4 +1,6 @@
-function [] = RoleApplicationPlot(table)
+function [] = RoleApplicationPlot()
+    table = table2cell(readtable('Recruit survey 2021 all responses data (1).xlsx'));
+
     dimensions = size(table);
     num_students = dimensions(1);
     %create cell array of the response values that correspond to the ones
@@ -41,8 +43,11 @@ function [] = RoleApplicationPlot(table)
     %since by default, categorical() orders the data alphabetically    
     ordinal_application_responses = reordercats(ordinal_application_responses, final_applications);
      
-    %plot the data
-    bar(ordinal_application_responses, application_proportions);
+    
+    %plot the data 
+    colours = rand(length(ordinal_application_responses), 3);
+    bar_plot = bar(ordinal_application_responses, application_proportions, 'facecolor', 'flat');
+    bar_plot.CData = colours; %colour in the bars for the bar plot
     text(1 : length(application_proportions),...
         application_proportions,...
         num2str(application_proportions'),...

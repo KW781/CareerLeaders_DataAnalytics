@@ -1,4 +1,6 @@
-function [] = AttendancePurposePlot(table)
+function [] = AttendancePurposePlot()
+    table = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx'));
+
     dimensions = size(table);
     num_students = dimensions(1);
     purpose_options = {'CV check', 'Career advice', 'LinkedIn check', 'Cover letter check', 'Application form check'}; %store the different options for the purpose
@@ -49,7 +51,9 @@ function [] = AttendancePurposePlot(table)
     ordinal_final_purpose_options = reordercats(ordinal_final_purpose_options, final_purpose_options);
     
     %plot the data
-    bar(ordinal_final_purpose_options, purpose_proportions);  
+    colours = rand(length(ordinal_final_purpose_options), 3); %generate the colours for the bars
+    bar_plot = bar(ordinal_final_purpose_options, purpose_proportions, 'facecolor', 'flat');  
+    bar_plot.CData = colours; %colour in the bars
     text(1 : length(purpose_proportions),...
         purpose_proportions,...
         num2str(purpose_proportions'),...
