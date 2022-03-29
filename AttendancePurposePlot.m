@@ -1,5 +1,5 @@
-function [] = AttendancePurposePlot()
-    table = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx'));
+function [] = AttendancePurposePlot(file_name)
+    table = table2cell(readtable(file_name));
 
     dimensions = size(table);
     num_students = dimensions(1);

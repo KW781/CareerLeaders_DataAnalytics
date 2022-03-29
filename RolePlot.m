@@ -1,5 +1,5 @@
-function [] = RolePlot()
-    table = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx'));
+function [] = RolePlot(file_name)
+    table = table2cell(readtable(file_name));
 
     dimensions = size(table);
     num_students = dimensions(1);

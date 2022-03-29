@@ -1,5 +1,5 @@
-function [] = RoleApplicationPlot()
-    table = table2cell(readtable('Recruit survey 2021 all responses data (1).xlsx'));
+function [] = RoleApplicationPlot(file_name)
+    table = table2cell(readtable(file_name));
 
     dimensions = size(table);
     num_students = dimensions(1);

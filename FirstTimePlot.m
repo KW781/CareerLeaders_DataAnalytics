@@ -1,5 +1,5 @@
-function [] = FirstTimePlot()
-    table = table2cell(readtable('Drop-in Data 2021 [CONFIDENTIAL] (1).xlsx')); %read table data
+function [] = FirstTimePlot(file_name)
+    table = table2cell(readtable(file_name)); %read table data
     
     dimensions = size(table);
     num_students = dimensions(1);
