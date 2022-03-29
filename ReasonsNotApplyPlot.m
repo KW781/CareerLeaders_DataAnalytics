@@ -6,7 +6,13 @@ function [] = ReasonsNotApplyPlot(file_name)
     reason_counters = zeros(1, 9); %stores the counters for each reason not applying
     for col = 240 : 248
         for row = 1 : dimensions(1)
-            if ~strcmp(table{row, col}, '')
+            %check whether the current element in table is null or not
+            null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
+            if length(null) > 1
+                null = 0;
+            end
+            %only increment if the current element is both not empty string and not null
+            if ~strcmp(table{row, col}, '') && ~null
                 reason_counters(col - 239) = reason_counters(col - 239) + 1; %increment the counter for the appropriate reason
                 if strcmp(reasons{col - 239}, '') && col ~= 248
                     reasons{col - 239} = table{row, col}; %copy the reason in the reason array (make sure 'Other' is still retained)
@@ -34,7 +40,7 @@ function [] = ReasonsNotApplyPlot(file_name)
     ordinal_final_reasons = reordercats(ordinal_final_reasons, final_reasons);
     
     %plot the data
-    colours = rand(length(reasons), 3); %generate the colours for the bars
+    colours = rand(length(ordinal_final_reasons), 3); %generate the colours for the bars
     bar_plot = barh(ordinal_final_reasons, final_reason_counters, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
     xtips1 = bar_plot(1).YEndPoints + 0.3;
