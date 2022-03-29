@@ -58,7 +58,7 @@ function [] = FoundOutMethodPlot(file_name)
         method_proportions,...
         num2str(method_proportions'),...
         'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
-    title('How did you find out about us? (2021)');
+    title('How did you find out about us?');
     xlabel('How found out');
     ylabel('Percentage of students');
 end
