@@ -1,11 +1,12 @@
 function [] = ReasonsNotApplyPlot(file_name)
     table = table2cell(readtable(file_name));
     dimensions = size(table); %extract the dimensions of the spread sheet
+    num_students = dimensions(1);
     
     reasons = {'', '', '', '', '', '', '', '', 'Other'}; %stores the strings for the reasons for not applying
-    reason_counters = zeros(1, 9); %stores the counters for each reason not applying
+    reason_counters = zeros(1, length(reasons)); %stores the counters for each reason not applying
     for col = 240 : 248
-        for row = 1 : dimensions(1)
+        for row = 1 : num_students
             %check whether the current element in table is null or not
             null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
             if length(null) > 1

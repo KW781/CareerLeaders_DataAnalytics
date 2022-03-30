@@ -1,5 +1,16 @@
 function [] = OrganisationPlot(file_name)
-    table = table2cell(readtable(file_name));
+    table_raw = readtable(file_name);
+    table = table2cell(table_raw); %read table data
+    
+    %find the column number with the data
+    column_number = -1;
+    headings = table_raw.Properties.VariableNames;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'WhichOrganisationIsThisApplicationFor_')
+            column_number = i;
+            break
+        end
+    end
 
     dimensions = size(table);
     num_students = dimensions(1);
@@ -8,7 +19,7 @@ function [] = OrganisationPlot(file_name)
     
     organisation_index = 1; %initialise the index for the organisations array to zero
     for i = 1 : num_students
-        current_organisation = table{i, 11};
+        current_organisation = table{i, column_number};
         if (length(current_organisation) ~= 0) && (~strcmpi(current_organisation, 'N/A'))
             if (WithinWord('P2B', current_organisation)) || (WithinWord('Passport to Business', current_organisation))
                 organisations_count(1) = organisations_count(1) + 1;

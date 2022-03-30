@@ -1,6 +1,7 @@
 function [] = StagesPlot(file_name)
     table = table2cell(readtable(file_name));
     dimensions = size(table);
+    num_students = dimensions(1);
     
     stages = {}; %initialise the stages array
     for i = 1 : 10
@@ -10,7 +11,7 @@ function [] = StagesPlot(file_name)
     stage_counters = zeros(1, length(stages));
     
     for col = 292 : 302
-        for row = 1 : dimensions(1)
+        for row = 1 : num_students
             %check whether the current element in table is null or not
             null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
             if length(null) > 1
@@ -30,7 +31,7 @@ function [] = StagesPlot(file_name)
     final_stages = {};
     stage_proportions = [];
     for i = 1 : length(stage_counters)
-        if round((stage_counters(i) / dimensions(1)) * 100) ~= 0
+        if round((stage_counters(i) / num_students) * 100) ~= 0
             options_index = options_index + 1;
             final_stages{options_index} = stages{i};
             stage_proportions(options_index) = round((stage_counters(i) / dimensions(1)) * 100);

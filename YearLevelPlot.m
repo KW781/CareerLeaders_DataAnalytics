@@ -1,5 +1,16 @@
 function [] = YearLevelPlot(file_name)
-    table = table2cell(readtable(file_name));
+    table_raw = readtable(file_name);
+    table = table2cell(table_raw); %read table data
+    
+    %find the column number with the data
+    column_number = -1;
+    headings = table_raw.Properties.VariableNames;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'WhatUniversityYearLevelAreYou_')
+            column_number = i;
+            break
+        end
+    end
 
     dimensions = size(table);
     num_students = dimensions(1);
@@ -8,7 +19,7 @@ function [] = YearLevelPlot(file_name)
     
     %count how many selected each option then total them
     for i = 1 : num_students
-        current_year_level = table{i, 6};
+        current_year_level = table{i, column_number};
         for j = 1 : length(year_levels)
             if strcmp(current_year_level, year_levels{j})
                 year_levels_count(j) = year_levels_count(j) + 1;

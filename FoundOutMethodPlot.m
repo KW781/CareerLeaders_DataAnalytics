@@ -1,5 +1,16 @@
 function [] = FoundOutMethodPlot(file_name)
-    table = table2cell(readtable(file_name));
+    table_raw = readtable(file_name);
+    table = table2cell(table_raw); %read table data
+    
+    %find the column number with the data
+    column_number = -1;
+    headings = table_raw.Properties.VariableNames;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'HowDidYouFindOutAboutTheBusinessSchoolCareers_')
+            column_number = i;
+            break
+        end
+    end
 
     dimensions = size(table);
     num_students = dimensions(1);
@@ -9,7 +20,7 @@ function [] = FoundOutMethodPlot(file_name)
     
     %count how many selected each option then total them
     for i = 1 : num_students
-        current_methods = split(table{i, 12}, ', ');
+        current_methods = split(table{i, column_number}, ', ');
         for j = 1 : length(current_methods)
             match = 0; %initialise the match flag to false
             for k = 1 : length(methods)

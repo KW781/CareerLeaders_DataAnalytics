@@ -1,6 +1,7 @@
 function [] = ExtracurricularsPlot(file_name)
     table = table2cell(readtable(file_name));
     dimensions = size(table);
+    num_students = dimensions(1);
     
     extracurriculars = {}; %initialise extracurriculars array
     for i = 1 : 28
@@ -10,7 +11,7 @@ function [] = ExtracurricularsPlot(file_name)
     extracurricular_counters = zeros(1, length(extracurriculars));
     
     for col = 263 : 291
-        for row = 1 : dimensions(1)
+        for row = 1 : num_students
             %check whether the current element in table is null or not
             null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
             if length(null) > 1

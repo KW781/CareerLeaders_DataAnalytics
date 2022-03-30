@@ -12,10 +12,12 @@ disp('8. Plot of reasons for not applying')
 disp('9. Plot of extra-curriculars students take part in')
 disp('10. Plot of stages students are in')
 disp(newline)
+disp('P2B Survey Plots');
+disp('13. Plot of confidence of students in career areas before and after');
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 10)
+while ~(plot_number >= 1 && plot_number <= 13)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
@@ -25,7 +27,7 @@ if strcmp(file_name(1), '"') || strcmp(file_name(1), '"')
     file_name = file_name(2 : length(file_name) - 1);
 end
 
-try
+% try
     switch plot_number
         case 1
             FirstTimePlot(file_name);
@@ -47,9 +49,11 @@ try
             ExtracurricularsPlot(file_name);
         case 10
             StagesPlot(file_name);
+        case 13
+            ConfidencePlot(file_name);
     end
-catch
-    disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
-end
+% catch
+%     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
+% end
 
 

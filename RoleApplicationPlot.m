@@ -1,6 +1,16 @@
 function [] = RoleApplicationPlot(file_name)
-    table = table2cell(readtable(file_name));
-
+    table_raw = readtable(file_name);
+    table = table2cell(table_raw); %read table data
+    
+    %find the column number with the data
+    column_number = -1;
+    headings = table_raw.Properties.VariableNames;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'Internship_pleaseGoToQuestion2_')
+            column_number = i;
+            break
+        end
+    end
     dimensions = size(table);
     num_students = dimensions(1);
     %create cell array of the response values that correspond to the ones
@@ -15,7 +25,7 @@ function [] = RoleApplicationPlot(file_name)
     
     %count how many students submitted each type of application then total
     %them
-    for i = 10 : 13
+    for i = column_number : column_number - 1 + length(application_values)
         for j = 1 : num_students
            if strcmp(table{j, i}, application_values{i - 9})
                application_counts(i - 9) = application_counts(i - 9) + 1;
