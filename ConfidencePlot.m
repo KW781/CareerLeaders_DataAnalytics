@@ -1,5 +1,17 @@
 function [] = ConfidencePlot(file_name)
-    table = table2cell(readtable(file_name));
+    table_raw = readtable(file_name);
+    table = table2cell(table_raw);
+    
+    %find the column numbers with the data
+    column_number = -1;
+    headings = table_raw.Properties.VariableDescriptions;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'Please rate your confidence at the beginning of the programme in:')
+            column_number = i;
+            break;
+        end
+    end
+    
     dimensions = size(table);
     num_students = dimensions(1);
     
@@ -7,27 +19,27 @@ function [] = ConfidencePlot(file_name)
     total_skill_levels_before = zeros(1, length(career_skills));
     total_skill_levels_after = zeros(1, length(career_skills));
     for after = 0 : 1 %loop for both before after after P2B
-        for skill = 1 : 3
-            for skill_level = 1 : 4
-                for row = 1 : num_students
-                    %after is a logical indicating whether we want to look at the plots for after the programme
-                    col = (after * 24) + 10 + ((skill - 1) * 4) + skill_level; %formula to obtain current column number based on the skill and skill level we're looking at
-                    %check whether the current element in table is null or not
-                    null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
-                    if length(null) > 1
-                        null = 0;
-                    end
-                    if ~strcmp(table{row, col}, '') && ~null
-                        if after
-                            total_skill_levels_after(skill) = total_skill_levels_after(skill) + skill_level;
-                        else
-                            total_skill_levels_before(skill) = total_skill_levels_before(skill) + skill_level;
-                        end
-                    end
+        for skill = 1 : length(career_skills)
+            col = length(career_skills) * after + column_number + skill - 1;
+            for row = 1 : num_students
+                if strcmp(table{row, col}, 'Not confident')
+                    skill_level = 1;
+                elseif strcmp(table{row, col}, 'Slightly confident')
+                    skill_level = 2;
+                elseif strcmp(table{row, col}, 'Confident')
+                    skill_level = 3;
+                elseif strcmp(table{row, col}, 'Very confident')
+                    skill_level = 4;
+                end
+                
+                if after
+                    total_skill_levels_after(skill) = total_skill_levels_after(skill) + skill_level;
+                else
+                    total_skill_levels_before(skill) = total_skill_levels_before(skill) + skill_level;
                 end
             end
         end
-     end
+    end
     
     %calculate average skill levels
     avg_skill_levels_before = [];
