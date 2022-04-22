@@ -8,32 +8,22 @@ function [] = StagesPlot(file_name)
     for i = 1 : length(headings)
         if strcmp(headings{i}, 'I am at stage:')
             column_number = i;
-            break
+            break;
         end
     end
     
     dimensions = size(table);
     num_students = dimensions(1);
     
-    stages = {}; %initialise the stages array
-    for i = 1 : 10
-        stages{i} = '';
-    end
-    stages{11} = 'Other'; %set the 'Other' stage
+    stages = {'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Honours', 'Postgraduate Diploma', 'Masters',...
+        'Business Masters', 'PhD', 'Other'};
     stage_counters = zeros(1, length(stages));
     
-    for col = column_number : column_number - 1 + length(stages)
-        for row = 1 : num_students
-            %check whether the current element in table is null or not
-            null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
-            if length(null) > 1
-                null = 0;
-            end
-            if ~strcmp(table{row, col}, '') && ~null
-                stage_counters(col - column_number + 1) = stage_counters(col - column_number + 1) + 1; %increment the counter for the appropriate stage
-                if strcmp(stages{col - column_number + 1}, '') && col ~= column_number - 1 + length(stages)
-                    stages{col - 291} = table{row, col}; %copy the stage into the stages array (making sure 'Other' is still retained)
-                end
+    %count the number of students selecting each option
+    for row = 1 : num_students
+        for i = 1 : length(stages)
+            if WithinWord(stages{i}, table{row, column_number})
+                stage_counters(i) = stage_counters(i) + 1;
             end
         end
     end
