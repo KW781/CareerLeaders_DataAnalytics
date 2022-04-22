@@ -6,7 +6,7 @@ function [] = RoleApplicationPlot(file_name)
     column_number = -1;
     headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
-        if strcmp(headings{i}, 'Internship (please go to question 2)') || strcmp(headings{i}, 'Between 1st January and 30th April 2021, I applied for an:')
+        if WithinWord('applied', headings{i}) && WithinWord('January', headings{i}) && WithinWord('April', headings{i})
             column_number = i;
             break
         end
@@ -15,24 +15,21 @@ function [] = RoleApplicationPlot(file_name)
     num_students = dimensions(1);
     %create cell array of the response values that correspond to the ones
     %in the spreadsheet
-    application_values = {'Internship (please go to question 2)',...
-                       'Graduate programme (please go to question 2)',...
-                       'Individual graduate role (please go to question 2)',...
-                       'I did not submit any application (please go to question 4)'};
     applications = {'Internship', 'Graduate programme', 'Individual graduate role', 'I did not submit any application', 'Unanswered'};
     %initialise counters for each response to zero
     application_counts = zeros(1, length(applications));
     
     %count how many students submitted each type of application then total
     %them
-    for i = column_number : column_number - 1 + length(application_values)
-        for j = 1 : num_students
-           if strcmp(table{j, i}, application_values{i - column_number + 1})
-               application_counts(i - column_number + 1) = application_counts(i - column_number + 1) + 1;
-           end
+    for row = 1 : num_students
+        for i = 1 : length(applications)
+            if WithinWord(applications{i}, table{row, column_number})
+                application_counts(i) = application_counts(i) + 1;
+                break;
+            end
         end
     end
-    application_counts(length(application_counts)) = num_students - sum(application_counts); %count the number of 'unanswered' responses
+    
     
     %this ensures that only categories that students selected are plotted
     %i.e. categories where the count was zero are not plotted   

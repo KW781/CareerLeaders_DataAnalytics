@@ -24,6 +24,7 @@ function [] = StagesPlot(file_name)
         for i = 1 : length(stages)
             if WithinWord(stages{i}, table{row, column_number})
                 stage_counters(i) = stage_counters(i) + 1;
+                break;
             end
         end
     end
