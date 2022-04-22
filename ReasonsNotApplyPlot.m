@@ -5,17 +5,31 @@ function [] = ReasonsNotApplyPlot(file_name)
     %find the column number with the data
     column_number = -1;
     headings = table_raw.Properties.VariableDescriptions;
+    head_found = 0;
+    num_options = 0;
     for i = 1 : length(headings)
-        if strcmp(headings{i}, 'I already have an internship') || strcmp(headings{i}, 'I did not apply for a job / internship / graduate programme because:')
+        if strcmp(headings{i}, 'I did not apply for a job / internship / graduate programme because:')
             column_number = i;
-            break
+            head_found = 1;
+        end
+        if head_found
+            if ~(strncmp(headings{i}, 'Var', 3)) && num_options > 0
+                break;
+            else
+                num_options = num_options + 1;
+            end
         end
     end
     
     dimensions = size(table); %extract the dimensions of the spread sheet
     num_students = dimensions(1);
     
-    reasons = {'', '', '', '', '', '', '', '', 'Other'}; %stores the strings for the reasons for not applying
+    %initialise the strings for the reasons for not applying
+    reasons = {};
+    for i = 1 : num_options - 1
+        reasons{i} = '';
+    end
+    reasons{num_options} = 'Other';
     reason_counters = zeros(1, length(reasons)); %stores the counters for each reason not applying
     for col = column_number : column_number - 1 + length(reasons)
         for row = 1 : num_students
