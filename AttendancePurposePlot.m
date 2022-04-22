@@ -4,9 +4,9 @@ function [] = AttendancePurposePlot(file_name)
     
     %find the column number with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableNames;
+    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
-        if strcmp(headings{i}, 'WhatIsYourPurposeForAttendingDrop_in_')
+        if strcmp(headings{i}, 'What is your purpose for attending Drop-in?')
             column_number = i;
             break
         end

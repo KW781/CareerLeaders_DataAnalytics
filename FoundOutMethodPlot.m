@@ -4,9 +4,9 @@ function [] = FoundOutMethodPlot(file_name)
     
     %find the column number with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableNames;
+    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
-        if strcmp(headings{i}, 'HowDidYouFindOutAboutTheBusinessSchoolCareers_')
+        if strcmp(headings{i}, 'How did you find out about the Business School Careers?')
             column_number = i;
             break
         end

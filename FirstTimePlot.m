@@ -4,9 +4,9 @@ function [] = FirstTimePlot(file_name)
     
     %find the column number with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableNames;
+    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
-        if strcmp(headings{i}, 'IsThisTheFirstTimeYouAreVisitingDrop_InThisSemester_')
+        if strcmp(headings{i}, 'Is this the first time you are visiting Drop-In this semester?')
             column_number = i;
             break
         end

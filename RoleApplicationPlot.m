@@ -4,9 +4,9 @@ function [] = RoleApplicationPlot(file_name)
     
     %find the column number with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableNames;
+    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
-        if strcmp(headings{i}, 'Internship_pleaseGoToQuestion2_')
+        if strcmp(headings{i}, 'Internship (please go to question 2)') || strcmp(headings{i}, 'Between 1st January and 30th April 2021, I applied for an:')
             column_number = i;
             break
         end
@@ -27,8 +27,8 @@ function [] = RoleApplicationPlot(file_name)
     %them
     for i = column_number : column_number - 1 + length(application_values)
         for j = 1 : num_students
-           if strcmp(table{j, i}, application_values{i - 9})
-               application_counts(i - 9) = application_counts(i - 9) + 1;
+           if strcmp(table{j, i}, application_values{i - column_number + 1})
+               application_counts(i - column_number + 1) = application_counts(i - column_number + 1) + 1;
            end
         end
     end

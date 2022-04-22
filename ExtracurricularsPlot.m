@@ -1,16 +1,37 @@
 function [] = ExtracurricularsPlot(file_name)
-    table = table2cell(readtable(file_name));
+    table_raw = readtable(file_name);
+    table = table2cell(table_raw); %read table data
+    
+    %find the column number and number of columns with the data
+    column_number = -1;
+    headings = table_raw.Properties.VariableDescriptions;
+    head_found = 0;
+    num_options = 0;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'Extra-curricular activities I take part in:')
+            column_number = i;
+            head_found = 1;
+        end
+        if head_found %analyse whether the heading is for another option or question if the header has already been found
+            if ~(strncmp(headings{i}, 'Var', 3)) && num_options > 0
+                break %exit if we've reached the next question in the survey
+            else
+                num_options = num_options + 1; %otherwise it's another option so increment
+            end
+        end
+    end
+    
     dimensions = size(table);
     num_students = dimensions(1);
     
     extracurriculars = {}; %initialise extracurriculars array
-    for i = 1 : 28
+    for i = 1 : num_options - 1
         extracurriculars{i} = '';
     end
-    extracurriculars{29} = 'Other'; %set the 'Other' extracurricular
+    extracurriculars{num_options} = 'Other'; %set the 'Other' extracurricular
     extracurricular_counters = zeros(1, length(extracurriculars));
     
-    for col = 263 : 291
+    for col = column_number : column_number - 1 + length(extracurriculars)
         for row = 1 : num_students
             %check whether the current element in table is null or not
             null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
@@ -19,9 +40,9 @@ function [] = ExtracurricularsPlot(file_name)
             end
             %only increment if the current element is both not empty string and not null
             if ~strcmp(table{row, col}, '') && ~null
-                extracurricular_counters(col - 262) = extracurricular_counters(col - 262) + 1; %increment the counter for the appropriate extracurricular
-                if strcmp(extracurriculars{col - 262}, '') && col ~= 291
-                    extracurriculars{col - 262} = table{row, col}; %copy the extracurricular into the extracurriculars array (make sure 'Other' is still retained)
+                extracurricular_counters(col - column_number + 1) = extracurricular_counters(col - column_number + 1) + 1; %increment the counter for the appropriate extracurricular
+                if strcmp(extracurriculars{col - column_number + 1}, '') && col ~= column_number - 1 + length(extracurriculars)
+                    extracurriculars{col - column_number + 1} = table{row, col}; %copy the extracurricular into the extracurriculars array (make sure 'Other' is still retained)
                 end
             end
         end

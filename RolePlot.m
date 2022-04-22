@@ -4,9 +4,9 @@ function [] = RolePlot(file_name)
     
     %find the column number with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableNames;
+    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
-        if strcmp(headings{i}, 'WhatRoleIsThisApplicationFor_')
+        if strcmp(headings{i}, 'What role is this application for?')
             column_number = i;
             break
         end

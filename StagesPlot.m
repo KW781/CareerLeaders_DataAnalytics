@@ -1,5 +1,17 @@
 function [] = StagesPlot(file_name)
-    table = table2cell(readtable(file_name));
+    table_raw = readtable(file_name);
+    table = table2cell(table_raw); %read table data
+    
+    %find the column number with the data
+    column_number = -1;
+    headings = table_raw.Properties.VariableDescriptions;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'I am at stage:')
+            column_number = i;
+            break
+        end
+    end
+    
     dimensions = size(table);
     num_students = dimensions(1);
     
@@ -10,7 +22,7 @@ function [] = StagesPlot(file_name)
     stages{11} = 'Other'; %set the 'Other' stage
     stage_counters = zeros(1, length(stages));
     
-    for col = 292 : 302
+    for col = column_number : column_number - 1 + length(stages)
         for row = 1 : num_students
             %check whether the current element in table is null or not
             null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
@@ -18,8 +30,8 @@ function [] = StagesPlot(file_name)
                 null = 0;
             end
             if ~strcmp(table{row, col}, '') && ~null
-                stage_counters(col - 291) = stage_counters(col - 291) + 1; %increment the counter for the appropriate stage
-                if strcmp(stages{col - 291}, '') && col ~= 302
+                stage_counters(col - column_number + 1) = stage_counters(col - column_number + 1) + 1; %increment the counter for the appropriate stage
+                if strcmp(stages{col - column_number + 1}, '') && col ~= column_number - 1 + length(stages)
                     stages{col - 291} = table{row, col}; %copy the stage into the stages array (making sure 'Other' is still retained)
                 end
             end

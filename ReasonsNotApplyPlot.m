@@ -1,11 +1,23 @@
 function [] = ReasonsNotApplyPlot(file_name)
-    table = table2cell(readtable(file_name));
+    table_raw = readtable(file_name);
+    table = table2cell(table_raw); %read table data
+    
+    %find the column number with the data
+    column_number = -1;
+    headings = table_raw.Properties.VariableDescriptions;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'I already have an internship') || strcmp(headings{i}, 'I did not apply for a job / internship / graduate programme because:')
+            column_number = i;
+            break
+        end
+    end
+    
     dimensions = size(table); %extract the dimensions of the spread sheet
     num_students = dimensions(1);
     
     reasons = {'', '', '', '', '', '', '', '', 'Other'}; %stores the strings for the reasons for not applying
     reason_counters = zeros(1, length(reasons)); %stores the counters for each reason not applying
-    for col = 240 : 248
+    for col = column_number : column_number - 1 + length(reasons)
         for row = 1 : num_students
             %check whether the current element in table is null or not
             null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
@@ -14,9 +26,9 @@ function [] = ReasonsNotApplyPlot(file_name)
             end
             %only increment if the current element is both not empty string and not null
             if ~strcmp(table{row, col}, '') && ~null
-                reason_counters(col - 239) = reason_counters(col - 239) + 1; %increment the counter for the appropriate reason
-                if strcmp(reasons{col - 239}, '') && col ~= 248
-                    reasons{col - 239} = table{row, col}; %copy the reason in the reason array (make sure 'Other' is still retained)
+                reason_counters(col - column_number + 1) = reason_counters(col - column_number + 1) + 1; %increment the counter for the appropriate reason
+                if strcmp(reasons{col - column_number + 1}, '') && col ~= column_number - 1 + length(reasons)
+                    reasons{col - column_number + 1} = table{row, col}; %copy the reason in the reason array (make sure 'Other' is still retained)
                 end
             end
         end
