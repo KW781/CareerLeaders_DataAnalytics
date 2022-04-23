@@ -52,7 +52,7 @@ function [] = EventAttendancePlot(file_name)
     
     %ensure only events with a non-zero count are plotted
     options_index = 0;
-    final_event_counters = 0;
+    final_event_counters = [];
     final_events = {};
     for i = 1 : length(event_counters)
         if event_counters(i) > 0

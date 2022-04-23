@@ -12,6 +12,7 @@ disp('8. Plot of reasons for not applying')
 disp('9. Plot of extra-curriculars students take part in')
 disp('10. Plot of stages students are in')
 disp('11. Plot of business school events students attended')
+disp('12. Plot of degrees students are studying')
 disp(newline)
 disp('P2B Survey Plots');
 disp('13. Plot of confidence of students in career areas before and after');
@@ -52,6 +53,8 @@ end
             StagesPlot(file_name);
         case 11
             EventAttendancePlot(file_name);
+        case 12
+            StudyDegreePlot(file_name);
         case 13
             ConfidencePlot(file_name);
     end
