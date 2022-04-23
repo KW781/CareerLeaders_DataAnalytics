@@ -13,13 +13,14 @@ disp('9. Plot of extra-curriculars students take part in')
 disp('10. Plot of stages students are in')
 disp('11. Plot of business school events students attended')
 disp('12. Plot of degrees students are studying')
+disp('13. Plot of majors students are studying')
 disp(newline)
 disp('P2B Survey Plots');
-disp('13. Plot of confidence of students in career areas before and after');
+disp('14. Plot of confidence of students in career areas before and after');
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 13)
+while ~(plot_number >= 1 && plot_number <= 14)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
@@ -56,6 +57,8 @@ end
         case 12
             StudyDegreePlot(file_name);
         case 13
+            MajorsPlot(file_name);
+        case 14
             ConfidencePlot(file_name);
     end
 % catch

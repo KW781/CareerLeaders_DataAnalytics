@@ -34,7 +34,8 @@ function [] = StudyDegreePlot(file_name)
         end
     end
     
-    %ensure only degrees with a zero count are plotted
+    %ensure only degrees with a zero count are plotted, and calculate
+    %percentages
     final_degree_options = {};
     final_degree_proportions = [];
     options_index = 0;
