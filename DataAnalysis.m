@@ -1,3 +1,4 @@
+disp(newline);
 disp('Drop-in Analysis Plots')
 disp('1. Plot of first time drop-in students');
 disp('2. Plot of drop-in attendance purposes');
@@ -17,10 +18,13 @@ disp('13. Plot of majors students are studying')
 disp(newline)
 disp('P2B Survey Plots');
 disp('14. Plot of confidence of students in career areas before and after');
+disp('15. Plot of understanding after programme completion')
+disp('16. Plot of value of group sessions')
+disp(newline);
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 14)
+while ~(plot_number >= 1 && plot_number <= 16)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
@@ -60,6 +64,10 @@ end
             MajorsPlot(file_name);
         case 14
             ConfidencePlot(file_name);
+        case 15
+            UnderstandingProgrammePlot(file_name);
+        case 16
+            GroupSessionPlot(file_name);
     end
 % catch
 %     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')

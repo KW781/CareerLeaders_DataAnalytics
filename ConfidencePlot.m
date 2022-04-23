@@ -17,11 +17,14 @@ function [] = ConfidencePlot(file_name)
     
     career_skills = {'Engaging with industry', 'Developing networks', 'Applying for jobs'};
     total_skill_levels_before = zeros(1, length(career_skills));
+    num_responses_before = zeros(1, length(career_skills));
     total_skill_levels_after = zeros(1, length(career_skills));
+    num_responses_after = zeros(1, length(career_skills));
     for after = 0 : 1 %loop for both before after after P2B
         for skill = 1 : length(career_skills)
             col = length(career_skills) * after + column_number + skill - 1;
             for row = 1 : num_students
+                skill_level = 0;
                 if strcmp(table{row, col}, 'Not confident')
                     skill_level = 1;
                 elseif strcmp(table{row, col}, 'Slightly confident')
@@ -32,10 +35,14 @@ function [] = ConfidencePlot(file_name)
                     skill_level = 4;
                 end
                 
-                if after
-                    total_skill_levels_after(skill) = total_skill_levels_after(skill) + skill_level;
-                else
-                    total_skill_levels_before(skill) = total_skill_levels_before(skill) + skill_level;
+                if skill_level ~= 0 %check if there was a response to the question
+                    if after
+                        total_skill_levels_after(skill) = total_skill_levels_after(skill) + skill_level;
+                        num_responses_after(skill) = num_responses_after(skill) + 1;
+                    else
+                        total_skill_levels_before(skill) = total_skill_levels_before(skill) + skill_level;
+                        num_responses_before(skill) = num_responses_before(skill) + 1;
+                    end
                 end
             end
         end
@@ -43,9 +50,10 @@ function [] = ConfidencePlot(file_name)
     
     %calculate average skill levels
     avg_skill_levels_before = [];
+    avg_skill_levels_after = [];
     for i = 1 : length(total_skill_levels_before)
-        avg_skill_levels_before(i) = total_skill_levels_before(i) / num_students;
-        avg_skill_levels_after(i) = total_skill_levels_after(i) / num_students;
+        avg_skill_levels_before(i) = total_skill_levels_before(i) / num_responses_before(i);
+        avg_skill_levels_after(i) = total_skill_levels_after(i) / num_responses_after(i);
     end
     
     %create the categorical data from career skills
