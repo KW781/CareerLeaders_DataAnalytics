@@ -23,11 +23,12 @@ disp('16. Plot of perceived value of group sessions')
 disp('17. Plot of perceived value of workshops')
 disp('18. Plot of perceived value of individual work')
 disp('19. Plot of how satisfied students were in using Canvas')
+disp('20. Plots of attendance at P2B events and workload')
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 19)
+while ~(plot_number >= 1 && plot_number <= 20)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
@@ -77,6 +78,8 @@ end
             IndividualWorkPlot(file_name);
         case 19
             CanvasSatisfactionPlot(file_name);
+        case 20
+            WorkloadAttendancePlot(file_name);
     end
 % catch
 %     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
