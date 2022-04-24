@@ -73,7 +73,7 @@ function [] = WorkshopPlot(file_name)
     
     ordinal_workshops = categorical(workshops); %convert the strings to categorical type
     
-    %reorder the ordinal values since reordercats() alphabetises them
+    %reorder the ordinal values since categorical() alphabetises them
     ordinal_workshops = reordercats(ordinal_workshops, workshops);
     
     %plot the data

@@ -56,7 +56,7 @@ function [] = GroupSessionPlot(file_name)
     
     ordinal_group_sessions = categorical(group_sessions); %convert strings to categorical type
     
-    %reorder the ordinal values, since reordercats() alphabetises them
+    %reorder the ordinal values, since categorical() alphabetises them
     ordinal_group_sessions = reordercats(ordinal_group_sessions, group_sessions);
     
     %plot the data
