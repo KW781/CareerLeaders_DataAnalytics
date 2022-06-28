@@ -25,16 +25,19 @@ disp('18. Plot of perceived value of individual work')
 disp('19. Plot of how satisfied students were in using Canvas')
 disp('20. Plots of attendance at P2B events and workload')
 disp(newline);
+disp('LinkedIn Destinations Plots');
+disp('21. Plot of most popular majors of graduates');
+disp(newline);
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 20)
+while ~(plot_number >= 1 && plot_number <= 21)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
 
 %remove leading and trailing quotation marks
-if strcmp(file_name(1), '"') || strcmp(file_name(1), '"')
+if strcmp(file_name(1), '"') 
     file_name = file_name(2 : length(file_name) - 1);
 end
 
@@ -80,6 +83,8 @@ try
             CanvasSatisfactionPlot(file_name);
         case 20
             WorkloadAttendancePlot(file_name);
+        case 21
+            DestinationsMajorsPlot(file_name);
     end
 catch
     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
