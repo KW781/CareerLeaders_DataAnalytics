@@ -27,11 +27,15 @@ disp('20. Plots of attendance at P2B events and workload')
 disp(newline);
 disp('LinkedIn Destinations Plots');
 disp('21. Plot of most popular majors of graduates');
+disp('22. Plot of jobs taken by graduates in current period')
+disp('23. Plot of jobs taken by graduates in previous period')
+disp('24. Plot of jobs taken by graduates in 2nd earliest period')
+disp('25. Plot of jobs taken by graduates in earliest period')
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 21)
+while ~(plot_number >= 1 && plot_number <= 25)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
@@ -85,6 +89,14 @@ try
             WorkloadAttendancePlot(file_name);
         case 21
             DestinationsMajorsPlot(file_name);
+        case 22
+            JobTitlesPlot(file_name, 4);
+        case 23
+            JobTitlesPlot(file_name, 1);
+        case 24
+            JobTitlesPlot(file_name, 2);
+        case 25
+            JobTitlesPlot(file_name, 3);
     end
 catch
     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
