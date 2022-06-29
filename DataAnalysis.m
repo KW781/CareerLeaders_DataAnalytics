@@ -31,11 +31,15 @@ disp('22. Plots of jobs taken by graduates in current period');
 disp('23. Plots of jobs taken by graduates in previous period');
 disp('24. Plots of jobs taken by graduates in 2nd furthest period');
 disp('25. Plots of jobs taken by graduates in furthest period');
+disp('26. Plot of companies worked at by graduates in current period');
+disp('27. Plot of companies worked at by graduates in previous period');
+disp('28. Plot of companies worked at by graduates in 2nd furthest period');
+disp('29. Plot of companies worked at by graduates in furthest period');
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 25)
+while ~(plot_number >= 1 && plot_number <= 29)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
@@ -97,6 +101,14 @@ try
             JobTitlesPlot(file_name, 2);
         case 25
             JobTitlesPlot(file_name, 3);
+        case 26
+            CompaniesPlot(file_name, 4);
+        case 27
+            CompaniesPlot(file_name, 1);
+        case 28
+            CompaniesPlot(file_name, 2);
+        case 29
+            CompaniesPlot(file_name, 3);
     end
 catch
     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
