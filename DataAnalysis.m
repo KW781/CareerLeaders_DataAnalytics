@@ -15,7 +15,7 @@ disp('10. Plot of stages students are in');
 disp('11. Plot of business school events students attended')
 disp('12. Plot of degrees students are studying');
 disp('13. Plot of majors students are studying');
-disp(newline)
+disp(newline);
 disp('P2B Survey Plots');
 disp('14. Plot of confidence of students in career areas before and after');
 disp('15. Plot of understanding after programme completion');
@@ -27,10 +27,10 @@ disp('20. Plots of attendance at P2B events and workload');
 disp(newline);
 disp('LinkedIn Destinations Plots');
 disp('21. Plot of most popular majors of graduates');
-disp('22. Plot of jobs taken by graduates in current period');
-disp('23. Plot of jobs taken by graduates in previous period');
-disp('24. Plot of jobs taken by graduates in 2nd earliest period');
-disp('25. Plot of jobs taken by graduates in earliest period');
+disp('22. Plots of jobs taken by graduates in current period');
+disp('23. Plots of jobs taken by graduates in previous period');
+disp('24. Plots of jobs taken by graduates in 2nd furthest period');
+disp('25. Plots of jobs taken by graduates in furthest period');
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered

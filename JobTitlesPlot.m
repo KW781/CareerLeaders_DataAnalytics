@@ -19,8 +19,7 @@ function [] = JobTitlesPlot(file_name, recent_param)
     %extract data dimensions and create job title arrays
     dimensions = size(table);
     num_students = dimensions(1);
-    %Note that 'None' should ALWAYS be the 2nd to last element in the
-    %job_titles array
+    %Note that 'None' and 'Other' should ALWAYS be the 2nd to last and last elements respectively in the job_titles array
     job_titles = {'Manager', 'Auditor', 'Accountant', 'Banking', 'Advisor',...
                     'Administrator', 'Consultant', 'Analyst',...
                     'Engineer', 'Associate', 'None', 'Other'};
@@ -58,12 +57,44 @@ function [] = JobTitlesPlot(file_name, recent_param)
         end
     end
     
+    %sort job titles in descending order using bubble sort
+    no_more_swaps = 0;
+    max = length(job_title_counters) - 1; 
+    while ~no_more_swaps
+        no_more_swaps = 1;
+        for i = 1 : max
+            if job_title_proportions(i) < job_title_proportions(i + 1)
+                temp_prop = job_title_proportions(i);
+                temp_title = final_job_titles{i};
+                job_title_proportions(i) = job_title_proportions(i + 1);
+                final_job_titles{i} = final_job_titles{i + 1};
+                job_title_proportions(i + 1) = temp_prop;
+                final_job_titles{i + 1} = temp_title;
+                no_more_swaps = 0;
+            end
+        end
+        max = max - 1;
+    end
+    
+    %plot the specific job types for the top 3 job titles, while excluding 'None' and 'Other'
+    num_jobs = 0; %counter for the number of jobs found that are not 'None' or 'Other'
+    for i = 1 : length(final_job_titles)
+        if ~(strcmp('None', final_job_titles{i}) || strcmp('Other', final_job_titles{i}))
+            num_jobs = num_jobs + 1;
+            PlotSpecificJob(table, column_number + 1, final_job_titles{i}, num_jobs)
+        end
+        if num_jobs == 3
+            break; %exit once we've plotted the top 3 job types
+        end
+    end
+    
     ordinal_final_job_titles = categorical(final_job_titles); %change strings to categorical type
     
     %reorder categories since categorical() alphabetises them by default
     ordinal_final_job_titles = reordercats(ordinal_final_job_titles, final_job_titles);
     
     %plot the data
+    figure(4);
     colours = rand(length(ordinal_final_job_titles), 3); %generate the colours for the bars
     bar_plot = bar(ordinal_final_job_titles, job_title_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
