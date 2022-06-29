@@ -1,5 +1,5 @@
 disp(newline);
-disp('Drop-in Analysis Plots')
+disp('Drop-in Analysis Plots');
 disp('1. Plot of first time drop-in students');
 disp('2. Plot of drop-in attendance purposes');
 disp('3. Plot of how students found out about drop-in');
@@ -9,28 +9,28 @@ disp('6. Plot of organisations drop-in students were applying to');
 disp(newline);
 disp('Recruitment Survey Plots');
 disp('7. Plot of roles students applied to');
-disp('8. Plot of reasons for not applying')
-disp('9. Plot of extra-curriculars students take part in')
-disp('10. Plot of stages students are in')
+disp('8. Plot of reasons for not applying');
+disp('9. Plot of extra-curriculars students take part in');
+disp('10. Plot of stages students are in');
 disp('11. Plot of business school events students attended')
-disp('12. Plot of degrees students are studying')
-disp('13. Plot of majors students are studying')
+disp('12. Plot of degrees students are studying');
+disp('13. Plot of majors students are studying');
 disp(newline)
 disp('P2B Survey Plots');
 disp('14. Plot of confidence of students in career areas before and after');
-disp('15. Plot of understanding after programme completion')
-disp('16. Plot of perceived value of group sessions')
-disp('17. Plot of perceived value of workshops')
-disp('18. Plot of perceived value of individual work')
-disp('19. Plot of how satisfied students were in using Canvas')
-disp('20. Plots of attendance at P2B events and workload')
+disp('15. Plot of understanding after programme completion');
+disp('16. Plot of perceived value of group sessions');
+disp('17. Plot of perceived value of workshops');
+disp('18. Plot of perceived value of individual work');
+disp('19. Plot of how satisfied students were in using Canvas');
+disp('20. Plots of attendance at P2B events and workload');
 disp(newline);
 disp('LinkedIn Destinations Plots');
 disp('21. Plot of most popular majors of graduates');
-disp('22. Plot of jobs taken by graduates in current period')
-disp('23. Plot of jobs taken by graduates in previous period')
-disp('24. Plot of jobs taken by graduates in 2nd earliest period')
-disp('25. Plot of jobs taken by graduates in earliest period')
+disp('22. Plot of jobs taken by graduates in current period');
+disp('23. Plot of jobs taken by graduates in previous period');
+disp('24. Plot of jobs taken by graduates in 2nd earliest period');
+disp('25. Plot of jobs taken by graduates in earliest period');
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered
