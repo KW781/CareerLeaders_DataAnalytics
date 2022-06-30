@@ -29,6 +29,9 @@ function [] = CompaniesPlot(file_name, recent_param)
         if length(null) > 1 %will return an array for character vectors, so following check must be done
             null = 0;
         end        
+        if length(null) == 0
+            null = 1; %set to null if the element is an empty string
+        end
         
         if ~null %only check the element if it's not null
             %check whether the current company already exists in the array

@@ -40,6 +40,10 @@ function [] = EventAttendancePlot(file_name)
             if length(null) > 1
                 null = 0;
             end
+            if length(null) == 0
+                null = 1; %set to null if the element is an empty string
+            end
+            
             %only increment if the current element is both not empty string and not null
             if ~strcmp(table{row, col}, '') && ~null
                 event_counters(col - column_number + 1) = event_counters(col - column_number + 1) + 1; %increment the counter for the appropriate event

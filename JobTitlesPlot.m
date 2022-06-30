@@ -32,6 +32,10 @@ function [] = JobTitlesPlot(file_name, recent_param)
         if length(null) > 1 %will return an array for character vectors, so following check must be done
             null = 0;
         end
+        if length(null) == 0
+            null = 1; %set to null if the element is an empty string
+        end
+        
         if null
             %increment the 'None' count if current table element is null (null is stored in the 2nd to last element)
             job_title_counters(length(job_title_counters) - 1) = job_title_counters(length(job_title_counters) - 1) + 1;
