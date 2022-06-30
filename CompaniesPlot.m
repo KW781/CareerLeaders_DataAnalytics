@@ -5,7 +5,7 @@ function [] = CompaniesPlot(file_name, recent_param)
     %find column with the comapny date, corresponding to the recent parameter
     col_count = 0; %counter to keep track of number of columns with job title data
     column_number = -1;
-    headings = table.Properties.VariableDescriptions;
+    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
         if WithinWord('Where', headings{i})
             col_count = col_count + 1;
@@ -25,7 +25,7 @@ function [] = CompaniesPlot(file_name, recent_param)
     company_counters = [];
     for student = 1 : num_students
         %check if current table element is null
-        null = isnan(table{i, column_number});
+        null = isnan(table{student, column_number});
         if length(null) > 1 %will return an array for character vectors, so following check must be done
             null = 0;
         end        
@@ -51,7 +51,7 @@ function [] = CompaniesPlot(file_name, recent_param)
     
     %calculate the percentages from the counters
     company_proportions = [];
-    for i = 1 : length(comapny_counters)
+    for i = 1 : length(company_counters)
         company_proportions(i) = round((company_counters(i) / num_students) * 100, 2);
     end
     

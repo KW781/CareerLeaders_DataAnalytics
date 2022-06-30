@@ -5,7 +5,7 @@ function [] = JobTitlesPlot(file_name, recent_param)
     %find column number with the most recent job title data
     col_count = 0; %counter to keep track of number of columns with job title data
     column_number = -1;
-    headings = table.Properties.VariableDescriptions;
+    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
         if WithinWord('Generic Title', headings{i})
             col_count = col_count + 1;
@@ -59,7 +59,7 @@ function [] = JobTitlesPlot(file_name, recent_param)
     
     %sort job titles in descending order using bubble sort
     no_more_swaps = 0;
-    max = length(job_title_counters) - 1; 
+    max = length(job_title_proportions) - 1; 
     while ~no_more_swaps
         no_more_swaps = 1;
         for i = 1 : max

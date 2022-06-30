@@ -4,7 +4,7 @@ function [] = DestinationsMajorsPlot(file_name)
     
     %find the column number with the majors data
     column_number = -1;
-    headings = table.Properties.VariableDescriptions;
+    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
         if WithinWord('Major', headings{i})
             column_number = i;
@@ -42,12 +42,12 @@ function [] = DestinationsMajorsPlot(file_name)
     %calculate the percentages from counters, for non-zero majors
     options_index = 0;
     final_majors = {};
-    final_major_proportions = [];
+    major_proportions = [];
     for i = 1 : length(major_counters)
         if major_counters(i) > 0
             options_index = options_index + 1;
             final_majors{options_index} = majors{i};
-            final_major_proportions(options_index) = round((major_counters(i) / num_students) * 100, 2);
+            major_proportions(options_index) = round((major_counters(i) / num_students) * 100, 2);
         end
     end
     
