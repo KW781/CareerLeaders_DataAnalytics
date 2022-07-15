@@ -16,7 +16,6 @@ function [] = OrganisationPlot(file_name)
     num_students = dimensions(1);
     organisations = {'P2B'}; %initialise organisations cell array to be populated, with at first just P2B
     organisations_count = [0];
-    total_responses = 0; %counter for total responses, because optional question which not everyone answers
     
     organisation_index = 1; %initialise the index for the organisations array to zero
     for i = 1 : num_students
@@ -39,7 +38,6 @@ function [] = OrganisationPlot(file_name)
                     organisations_count(organisation_index) = 1;
                 end
             end
-            total_responses = total_responses + 1;
         end
     end
     
@@ -72,7 +70,7 @@ function [] = OrganisationPlot(file_name)
         organisation_proportions = [];
         for i = 1 : 10
             final_organisations{i} = organisations{i};
-            organisation_proportions(i) = round((organisations_count(i) / total_responses) * 100);
+            organisation_proportions(i) = round((organisations_count(i) / sum(organisations_count)) * 100);
         end
     end
     
