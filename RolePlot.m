@@ -82,11 +82,17 @@ function [] = RolePlot(file_name)
     
     %plot the data
     colours = rand(length(ordinal_final_roles), 3); %generate the colours for the bars
+    %create percentage symbols array (because they need to be appended to the numbers when plotting)
+    percent_arr = '';
+    for i = 1 : length(role_proportions)
+        percent_arr = [percent_arr; '%'];
+    end
+    %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_roles, role_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colours in the bars in the plot
     text(1 : length(role_proportions),...
         role_proportions,...
-        num2str(role_proportions'),...
+        [num2str(role_proportions'), percent_arr],...
         'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
     title('What role is this application for? (2021)');
     xlabel('Role');

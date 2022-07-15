@@ -49,7 +49,7 @@ if strcmp(file_name(1), '"')
     file_name = file_name(2 : length(file_name) - 1);
 end
 
-% try
+try
     switch plot_number
         case 1
             FirstTimePlot(file_name);
@@ -110,11 +110,11 @@ end
         case 29
             CompclearaniesPlot(file_name, 3);
     end
-% catch
-%     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
-%     if plot_number >= 21 && plot_number <= 29
-%         disp('You are generating a plot for the LinkedIn Destinations project. Make sure you have entered the data into the spreadsheet correctly.');
-%     end
-% end
+catch
+    disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
+    if plot_number >= 21 && plot_number <= 29
+        disp('You are generating a plot for the LinkedIn Destinations project. Make sure you have entered the data into the spreadsheet correctly.');
+    end
+end
 
 

@@ -63,11 +63,17 @@ function [] = FoundOutMethodPlot(file_name)
     
     %plot the data
     colours = rand(length(ordinal_final_methods), 3); %generate the colours for the bars
+    %create percentage symbols array (because they need to be appended to the numbers when plotting)
+    percent_arr = '';
+    for i = 1 : length(method_proportions)
+        percent_arr = [percent_arr; '%'];
+    end
+    %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_methods, method_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
     text(1 : length(method_proportions),...
         method_proportions,...
-        num2str(method_proportions'),...
+        [num2str(method_proportions'), percent_arr],...
         'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
     title('How did you find out about us?');
     xlabel('How found out');

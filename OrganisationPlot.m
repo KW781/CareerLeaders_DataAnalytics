@@ -16,6 +16,7 @@ function [] = OrganisationPlot(file_name)
     num_students = dimensions(1);
     organisations = {'P2B'}; %initialise organisations cell array to be populated, with at first just P2B
     organisations_count = [0];
+    total_responses = 0; %counter for total responses, because optional question which not everyone answers
     
     organisation_index = 1; %initialise the index for the organisations array to zero
     for i = 1 : num_students
@@ -38,6 +39,7 @@ function [] = OrganisationPlot(file_name)
                     organisations_count(organisation_index) = 1;
                 end
             end
+            total_responses = total_responses + 1;
         end
     end
     
@@ -70,7 +72,7 @@ function [] = OrganisationPlot(file_name)
         organisation_proportions = [];
         for i = 1 : 10
             final_organisations{i} = organisations{i};
-            organisation_proportions(i) = (organisations_count(i) / num_students) * 100;
+            organisation_proportions(i) = round((organisations_count(i) / total_responses) * 100);
         end
     end
     
@@ -82,11 +84,17 @@ function [] = OrganisationPlot(file_name)
     
     %plot the data
     colours = rand(length(ordinal_final_organisations), 3); %generate the colours for the bars
+    %create percentage symbols array (because they need to be appended to the numbers when plotting)
+    percent_arr = '';
+    for i = 1 : length(organisation_proportions)
+        percent_arr = [percent_arr; '%'];
+    end
+    %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_organisations, organisation_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
     text(1 : length(organisation_proportions),...
         organisation_proportions,...
-        num2str(organisation_proportions'),...
+        [num2str(organisation_proportions'), percent_arr],...
         'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
     title('What organisation are you applying for? (2021)');
     xlabel('Organisation');
