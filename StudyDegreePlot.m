@@ -24,11 +24,13 @@ function [] = StudyDegreePlot(file_name)
                       'Bachelor of Property conjoint with other degree',...
                       'Bachelor of Commerce conjoint with Property'};
     degree_option_counters = zeros(1, length(degree_options));
+    total_responses = 0; %counter for the number of responses to the question because it's an optional question which not everyone answers
     %count the students studying each degree
     for row = 1 : num_students
         for i = 1 : length(degree_options)
             if WithinWord(degree_options{i}, table{row, column_number})
                 degree_option_counters(i) = degree_option_counters(i) + 1;
+                total_responses = total_responses + 1;
                 break;
             end
         end
@@ -43,7 +45,7 @@ function [] = StudyDegreePlot(file_name)
         if degree_option_counters(i) > 0
             options_index = options_index + 1;
             final_degree_options{options_index} = degree_options{i};
-            final_degree_proportions(options_index) = round((degree_option_counters(i) / num_students) * 100, 2);
+            final_degree_proportions(options_index) = round((degree_option_counters(i) / total_responses) * 100, 2);
         end
     end
     
