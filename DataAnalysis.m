@@ -108,7 +108,7 @@ try
         case 28
             CompaniesPlot(file_name, 2);
         case 29
-            CompclearaniesPlot(file_name, 3);
+            CompaniesPlot(file_name, 3);
     end
 catch
     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')

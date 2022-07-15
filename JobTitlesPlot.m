@@ -54,7 +54,7 @@ function [] = JobTitlesPlot(file_name, recent_param)
     final_job_titles = {};
     job_title_proportions = [];
     for i = 1 : length(job_title_counters)
-        if job_title_counters(i) > 0
+        if round((job_title_counters(i) / num_students) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_job_titles{options_index} = job_titles{i};
             job_title_proportions(options_index) = round((job_title_counters(i) / num_students) * 100, 2);
@@ -100,11 +100,17 @@ function [] = JobTitlesPlot(file_name, recent_param)
     %plot the data
     figure(4);
     colours = rand(length(ordinal_final_job_titles), 3); %generate the colours for the bars
+    %create percentage symbols array (because they need to be appended to the numbers when plotting)
+    percent_arr = '';
+    for i = 1 : length(organisation_proportions)
+        percent_arr = [percent_arr; '%'];
+    end
+    %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_job_titles, job_title_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
     text(1 : length(job_title_proportions),...
         job_title_proportions,...
-        num2str(job_title_proportions'),...
+        [num2str(job_title_proportions'), percent_arr],...
         'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
     title('Jobs currently taken by graduates');
     xlabel('Job title');

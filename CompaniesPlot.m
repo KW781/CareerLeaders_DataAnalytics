@@ -55,7 +55,7 @@ function [] = CompaniesPlot(file_name, recent_param)
     %calculate the percentages from the counters
     company_proportions = [];
     for i = 1 : length(company_counters)
-        company_proportions(i) = round((company_counters(i) / num_students) * 100, 2);
+        company_proportions(i) = round((company_counters(i) / sum(company_counters)) * 100, 2);
     end
     
     ordinal_companies = categorical(companies); %convert the strings to categorical type
