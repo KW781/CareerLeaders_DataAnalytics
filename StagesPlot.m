@@ -15,15 +15,21 @@ function [] = StagesPlot(file_name)
     dimensions = size(table);
     num_students = dimensions(1);
     
-    stages = {'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Honours', 'Postgraduate Diploma', 'Masters',...
-        'Business Masters', 'PhD', 'Other'};
+    % sets up stages array with stages that can be selected. Note that 
+    %'Business Masters' MUST come before 'Masters' in the array because
+    %'Masters' is within 'Business Masters' and we are running the
+    %WithinWord() function
+    stages = {'Year 1', 'Year 2', 'Year 3', 'Year 4', 'Year 5', 'Honours', 'Postgraduate Diploma',...
+        'Business Masters', 'Masters', 'PhD', 'Other'};
     stage_counters = zeros(1, length(stages));
+    total_responses = 0; %counter for the number of responses to the question because it's an optional question which not everyone answers
     
     %count the number of students selecting each option
     for row = 1 : num_students
         for i = 1 : length(stages)
             if WithinWord(stages{i}, table{row, column_number})
                 stage_counters(i) = stage_counters(i) + 1;
+                total_responses = total_responses + 1;
                 break;
             end
         end
@@ -34,10 +40,10 @@ function [] = StagesPlot(file_name)
     final_stages = {};
     stage_proportions = [];
     for i = 1 : length(stage_counters)
-        if round((stage_counters(i) / num_students) * 100) ~= 0
+        if round((stage_counters(i) / total_responses) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_stages{options_index} = stages{i};
-            stage_proportions(options_index) = round((stage_counters(i) / dimensions(1)) * 100);
+            stage_proportions(options_index) = round((stage_counters(i) / total_responses) * 100, 2);
         end
     end
     
