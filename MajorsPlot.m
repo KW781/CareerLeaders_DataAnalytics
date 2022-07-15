@@ -60,7 +60,7 @@ function [] = MajorsPlot(file_name)
     final_majors = {};
     final_major_proportions = [];
     for i = 1 : length(major_counters)
-        if major_counters(i) > 0
+        if round((major_counters(i) / num_students) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_majors{options_index} = majors{i};
             final_major_proportions(options_index) = round((major_counters(i) / num_students) * 100, 2);
@@ -75,11 +75,17 @@ function [] = MajorsPlot(file_name)
     
     %plot the data 
     colours = rand(length(ordinal_final_majors), 3);
+    %create percentage symbols array (because they need to be appended to the numbers when plotting)
+    percent_arr = '';
+    for i = 1 : length(final_major_proportions)
+        percent_arr = [percent_arr; '%'];
+    end
+    %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_majors, final_major_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars for the bar plot
     text(1 : length(final_major_proportions),...
         final_major_proportions,...
-        num2str(final_major_proportions'),...
+        [num2str(final_major_proportions'), percent_arr],...
         'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
     title('Percentages of students studying BCom majors');
     xlabel('Major');

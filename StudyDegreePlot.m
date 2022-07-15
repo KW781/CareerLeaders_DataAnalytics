@@ -25,6 +25,7 @@ function [] = StudyDegreePlot(file_name)
                       'Bachelor of Commerce conjoint with Property'};
     degree_option_counters = zeros(1, length(degree_options));
     total_responses = 0; %counter for the number of responses to the question because it's an optional question which not everyone answers
+    
     %count the students studying each degree
     for row = 1 : num_students
         for i = 1 : length(degree_options)
@@ -42,7 +43,7 @@ function [] = StudyDegreePlot(file_name)
     final_degree_proportions = [];
     options_index = 0;
     for i = 1 : length(degree_option_counters)
-        if degree_option_counters(i) > 0
+        if round((degree_option_counters(i) / total_responses) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_degree_options{options_index} = degree_options{i};
             final_degree_proportions(options_index) = round((degree_option_counters(i) / total_responses) * 100, 2);
@@ -57,11 +58,17 @@ function [] = StudyDegreePlot(file_name)
     
     %plot the data 
     colours = rand(length(ordinal_final_degree_options), 3);
+    %create percentage symbols array (because they need to be appended to the numbers when plotting)
+    percent_arr = '';
+    for i = 1 : length(final_degree_proportions)
+        percent_arr = [percent_arr; '%'];
+    end
+    %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_degree_options, final_degree_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars for the bar plot
     text(1 : length(final_degree_proportions),...
         final_degree_proportions,...
-        num2str(final_degree_proportions'),...
+        [num2str(final_degree_proportions'), percent_arr],...
         'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
     title('Percentages of students studying Business School degrees');
     xlabel('Degree');
