@@ -49,6 +49,17 @@ if strcmp(file_name(1), '"')
     file_name = file_name(2 : length(file_name) - 1);
 end
 
+%if recruitment plot is wanted, parse top and bottom spreadsheet headers
+if plot_number >= 7 && plot_number <= 13
+    [~, ~, raw_data] = xlsread(file_name);
+    dimensions = size(raw_data);
+    num_cols = dimensions(2);
+    headings = {};
+    for i = 1 : num_cols
+        headings{i} = raw_data{1, i};
+    end
+end
+
 try
     switch plot_number
         case 1
@@ -64,19 +75,19 @@ try
         case 6
             OrganisationPlot(file_name);
         case 7
-            RoleApplicationPlot(file_name);
+            RoleApplicationPlot(file_name, headings);
         case 8
-            ReasonsNotApplyPlot(file_name);
+            ReasonsNotApplyPlot(file_name, headings);
         case 9
-            ExtracurricularsPlot(file_name);
+            ExtracurricularsPlot(file_name, headings);
         case 10
-            StagesPlot(file_name);
+            StagesPlot(file_name, headings);
         case 11
-            EventAttendancePlot(file_name);
+            EventAttendancePlot(file_name, headings);
         case 12
-            StudyDegreePlot(file_name);
+            StudyDegreePlot(file_name, headings);
         case 13
-            MajorsPlot(file_name);
+            MajorsPlot(file_name, headings);
         case 14
             ConfidencePlot(file_name);
         case 15

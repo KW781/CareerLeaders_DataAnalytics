@@ -1,10 +1,9 @@
-function [] = StudyDegreePlot(file_name)
+function [] = StudyDegreePlot(file_name, headings)
     table_raw = readtable(file_name);
     table = table2cell(table_raw);
     
     %find the column number with the studying degree data
     column_number = -1;
-    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
         if strcmp(headings{i}, 'I am studying a:')
             column_number = i;

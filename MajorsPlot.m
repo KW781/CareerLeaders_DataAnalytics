@@ -1,11 +1,10 @@
-function [] = MajorsPlot(file_name)
+function [] = MajorsPlot(file_name, headings)
     table_raw = readtable(file_name);
     table = table2cell(table_raw);
     
     %find the column number with the majors data, and the number of columns
     %with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableDescriptions;
     head_found = 0;
     num_options = 0;
     for i = 1 : length(headings)
@@ -14,7 +13,12 @@ function [] = MajorsPlot(file_name)
             head_found = 1;
         end
         if head_found
-            if ~strncmp(headings{i}, 'Var', 3) && num_options > 0
+            %check if heading value is not null, indicating we've reached end of question section
+            null = isnan(headings{i});
+            if length(null) > 1
+                null = 0;
+            end
+            if ~(null) && num_options > 0
                 break;
             else
                 num_options = num_options + 1;

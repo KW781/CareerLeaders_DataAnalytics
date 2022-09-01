@@ -1,10 +1,9 @@
-function [] = StagesPlot(file_name)
+function [] = StagesPlot(file_name, headings)
     table_raw = readtable(file_name);
     table = table2cell(table_raw); %read table data
     
     %find the column number with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
         if strcmp(headings{i}, 'I am at stage:')
             column_number = i;

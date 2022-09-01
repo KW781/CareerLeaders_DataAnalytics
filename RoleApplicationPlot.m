@@ -1,10 +1,9 @@
-function [] = RoleApplicationPlot(file_name)
+function [] = RoleApplicationPlot(file_name, headings)
     table_raw = readtable(file_name);
     table = table2cell(table_raw); %read table data
     
     %find the column number with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
         if WithinWord('applied', headings{i}) && WithinWord('January', headings{i}) && WithinWord('April', headings{i})
             column_number = i;

@@ -1,10 +1,9 @@
-function [] = ReasonsNotApplyPlot(file_name)
+function [] = ReasonsNotApplyPlot(file_name, headings)
     table_raw = readtable(file_name);
     table = table2cell(table_raw); %read table data
     
     %find the column number with the data
     column_number = -1;
-    headings = table_raw.Properties.VariableDescriptions;
     head_found = 0;
     num_options = 0;
     for i = 1 : length(headings)
@@ -13,7 +12,12 @@ function [] = ReasonsNotApplyPlot(file_name)
             head_found = 1;
         end
         if head_found
-            if ~(strncmp(headings{i}, 'Var', 3)) && num_options > 0
+            %check if heading value is not null, indicating we've reached end of question section
+            null = isnan(headings{i});
+            if length(null) > 1
+                null = 0;
+            end
+            if ~(null) && num_options > 0
                 break;
             else
                 num_options = num_options + 1;
