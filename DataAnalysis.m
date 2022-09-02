@@ -15,31 +15,33 @@ disp('10. Plot of stages students are in');
 disp('11. Plot of business school events students attended')
 disp('12. Plot of degrees students are studying');
 disp('13. Plot of majors students are studying');
+disp('14. Plot of salaries offered to students for their roles')
+disp('15. Plot of genders of survey respondents')
 disp(newline);
 disp('P2B Survey Plots');
-disp('14. Plot of confidence of students in career areas before and after');
-disp('15. Plot of understanding after programme completion');
-disp('16. Plot of perceived value of group sessions');
-disp('17. Plot of perceived value of workshops');
-disp('18. Plot of perceived value of individual work');
-disp('19. Plot of how satisfied students were in using Canvas');
-disp('20. Plots of attendance at P2B events and workload');
+disp('16. Plot of confidence of students in career areas before and after');
+disp('17. Plot of understanding after programme completion');
+disp('18. Plot of perceived value of group sessions');
+disp('19. Plot of perceived value of workshops');
+disp('20. Plot of perceived value of individual work');
+disp('21. Plot of how satisfied students were in using Canvas');
+disp('22. Plots of attendance at P2B events and workload');
 disp(newline);
 disp('LinkedIn Destinations Plots');
-disp('21. Plot of most popular majors of graduates');
-disp('22. Plots of jobs taken by graduates in current period');
-disp('23. Plots of jobs taken by graduates in previous period');
-disp('24. Plots of jobs taken by graduates in 2nd furthest period');
-disp('25. Plots of jobs taken by graduates in furthest period');
-disp('26. Plot of companies worked at by graduates in current period');
-disp('27. Plot of companies worked at by graduates in previous period');
-disp('28. Plot of companies worked at by graduates in 2nd furthest period');
-disp('29. Plot of companies worked at by graduates in furthest period');
+disp('23. Plot of most popular majors of graduates');
+disp('24. Plots of jobs taken by graduates in current period');
+disp('25. Plots of jobs taken by graduates in previous period');
+disp('26. Plots of jobs taken by graduates in 2nd furthest period');
+disp('27. Plots of jobs taken by graduates in furthest period');
+disp('28. Plot of companies worked at by graduates in current period');
+disp('29. Plot of companies worked at by graduates in previous period');
+disp('30. Plot of companies worked at by graduates in 2nd furthest period');
+disp('31. Plot of companies worked at by graduates in furthest period');
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 29)
+while ~(plot_number >= 1 && plot_number <= 31)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
@@ -50,7 +52,7 @@ if strcmp(file_name(1), '"')
 end
 
 %if recruitment plot is wanted, parse top and bottom spreadsheet headers
-if plot_number >= 7 && plot_number <= 13
+if plot_number >= 7 && plot_number <= 15
     [~, ~, raw_data] = xlsread(file_name);
     dimensions = size(raw_data);
     num_cols = dimensions(2);
@@ -89,36 +91,40 @@ try
         case 13
             MajorsPlot(file_name, headings);
         case 14
-            ConfidencePlot(file_name);
+            SalaryPlot(file_name, headings);
         case 15
-            UnderstandingProgrammePlot(file_name);
+            %arbitrary function call
         case 16
-            GroupSessionPlot(file_name);
+            ConfidencePlot(file_name);
         case 17
-            WorkshopPlot(file_name);
+            UnderstandingProgrammePlot(file_name);
         case 18
-            IndividualWorkPlot(file_name);
+            GroupSessionPlot(file_name);
         case 19
-            CanvasSatisfactionPlot(file_name);
+            WorkshopPlot(file_name);
         case 20
-            WorkloadAttendancePlot(file_name);
+            IndividualWorkPlot(file_name);
         case 21
-            DestinationsMajorsPlot(file_name);
+            CanvasSatisfactionPlot(file_name);
         case 22
-            JobTitlesPlot(file_name, 4);
+            WorkloadAttendancePlot(file_name);
         case 23
-            JobTitlesPlot(file_name, 1);
+            DestinationsMajorsPlot(file_name);
         case 24
-            JobTitlesPlot(file_name, 2);
+            JobTitlesPlot(file_name, 4);
         case 25
-            JobTitlesPlot(file_name, 3);
+            JobTitlesPlot(file_name, 1);
         case 26
-            CompaniesPlot(file_name, 4);
+            JobTitlesPlot(file_name, 2);
         case 27
-            CompaniesPlot(file_name, 1);
+            JobTitlesPlot(file_name, 3);
         case 28
-            CompaniesPlot(file_name, 2);
+            CompaniesPlot(file_name, 4);
         case 29
+            CompaniesPlot(file_name, 1);
+        case 30
+            CompaniesPlot(file_name, 2);
+        case 31
             CompaniesPlot(file_name, 3);
     end
 catch
