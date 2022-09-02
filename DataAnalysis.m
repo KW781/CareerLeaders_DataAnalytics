@@ -93,7 +93,7 @@ try
         case 14
             SalaryPlot(file_name, headings);
         case 15
-            %arbitrary function call
+            GenderPlot(file_name, headings);
         case 16
             ConfidencePlot(file_name);
         case 17
