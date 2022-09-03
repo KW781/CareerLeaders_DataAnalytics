@@ -105,7 +105,7 @@ function [] = ApplicationProgressionPlot(file_name, top_headings, bottom_heading
         final_app_stage_counters,...
         num2str(final_app_stage_counters'),...
         'vert', 'bottom', 'horiz', 'center'); 
-    title('Number of students progressing to each application stage throughout recruitment');
+    title('Number of applications progressing to each application stage throughout recruitment');
     xlabel('Application stage');
-    ylabel('Number of students')
+    ylabel('Number of applications')
 end
