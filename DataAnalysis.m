@@ -18,31 +18,33 @@ disp('13. Plot of majors students are studying');
 disp('14. Plot of salaries offered to students for their roles')
 disp('15. Plot of genders of survey respondents')
 disp('16. Plot of NZ residency status of students')
+disp('17. Plot of application progression of students')
+disp('18. Plot of top/most popular employers')
 disp(newline);
 disp('P2B Survey Plots');
-disp('17. Plot of confidence of students in career areas before and after');
-disp('18. Plot of understanding after programme completion');
-disp('19. Plot of perceived value of group sessions');
-disp('20. Plot of perceived value of workshops');
-disp('21. Plot of perceived value of individual work');
-disp('22. Plot of how satisfied students were in using Canvas');
-disp('23. Plots of attendance at P2B events and workload');
+disp('19. Plot of confidence of students in career areas before and after');
+disp('20. Plot of understanding after programme completion');
+disp('21. Plot of perceived value of group sessions');
+disp('22. Plot of perceived value of workshops');
+disp('23. Plot of perceived value of individual work');
+disp('24. Plot of how satisfied students were in using Canvas');
+disp('25. Plots of attendance at P2B events and workload');
 disp(newline);
 disp('LinkedIn Destinations Plots');
-disp('24. Plot of most popular majors of graduates');
-disp('25. Plots of jobs taken by graduates in current period');
-disp('26. Plots of jobs taken by graduates in previous period');
-disp('27. Plots of jobs taken by graduates in 2nd furthest period');
-disp('28. Plots of jobs taken by graduates in furthest period');
-disp('29. Plot of companies worked at by graduates in current period');
-disp('30. Plot of companies worked at by graduates in previous period');
-disp('31. Plot of companies worked at by graduates in 2nd furthest period');
-disp('32. Plot of companies worked at by graduates in furthest period');
+disp('26. Plot of most popular majors of graduates');
+disp('27. Plots of jobs taken by graduates in current period');
+disp('28. Plots of jobs taken by graduates in previous period');
+disp('29. Plots of jobs taken by graduates in 2nd furthest period');
+disp('30. Plots of jobs taken by graduates in furthest period');
+disp('31. Plot of companies worked at by graduates in current period');
+disp('32. Plot of companies worked at by graduates in previous period');
+disp('33. Plot of companies worked at by graduates in 2nd furthest period');
+disp('34. Plot of companies worked at by graduates in furthest period');
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 32)
+while ~(plot_number >= 1 && plot_number <= 34)
     plot_number = input('Enter which number plot you want: ');
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
@@ -61,7 +63,20 @@ if plot_number >= 7 && plot_number <= 16
     for i = 1 : num_cols
         headings{i} = raw_data{1, i};
     end
+elseif plot_number >= 17 && plot_number <= 18
+    %if recruitment plot where employer data is needed, extract the bottom
+    %headings as well because they contain the employer headings
+    [~, ~, raw_data] = xlsread(file_name);
+    dimensions = size(raw_data);
+    num_cols = dimensions(2);
+    top_headings = {};
+    bottom_headings = {};
+    for i = 1 : num_cols
+        top_headings{i} = raw_data{1, i};
+        bottom_headings{i} = raw_data{2, i};
+    end
 end
+    
 
 try
     switch plot_number
@@ -98,41 +113,45 @@ try
         case 16
             NZResidencyPlot(file_name, headings);
         case 17
-            ConfidencePlot(file_name);
+            ApplicationProgressionPlot(file_name, top_headings, bottom_headings);
         case 18
-            UnderstandingProgrammePlot(file_name);
+            TopEmployersPlot(file_name, top_headings, bottom_headings);
         case 19
-            GroupSessionPlot(file_name);
+            ConfidencePlot(file_name);
         case 20
-            WorkshopPlot(file_name);
+            UnderstandingProgrammePlot(file_name);
         case 21
-            IndividualWorkPlot(file_name);
+            GroupSessionPlot(file_name);
         case 22
-            CanvasSatisfactionPlot(file_name);
+            WorkshopPlot(file_name);
         case 23
-            WorkloadAttendancePlot(file_name);
+            IndividualWorkPlot(file_name);
         case 24
-            DestinationsMajorsPlot(file_name);
+            CanvasSatisfactionPlot(file_name);
         case 25
-            JobTitlesPlot(file_name, 4);
+            WorkloadAttendancePlot(file_name);
         case 26
-            JobTitlesPlot(file_name, 1);
+            DestinationsMajorsPlot(file_name);
         case 27
-            JobTitlesPlot(file_name, 2);
+            JobTitlesPlot(file_name, 4);
         case 28
-            JobTitlesPlot(file_name, 3);
+            JobTitlesPlot(file_name, 1);
         case 29
-            CompaniesPlot(file_name, 4);
+            JobTitlesPlot(file_name, 2);
         case 30
-            CompaniesPlot(file_name, 1);
+            JobTitlesPlot(file_name, 3);
         case 31
-            CompaniesPlot(file_name, 2);
+            CompaniesPlot(file_name, 4);
         case 32
+            CompaniesPlot(file_name, 1);
+        case 33
+            CompaniesPlot(file_name, 2);
+        case 34
             CompaniesPlot(file_name, 3);
     end
 catch
     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
-    if plot_number >= 23 && plot_number <= 32
+    if plot_number >= 26 && plot_number <= 34
         disp('You are generating a plot for the LinkedIn Destinations project. Make sure you have entered the data into the spreadsheet correctly.');
     end
 end
