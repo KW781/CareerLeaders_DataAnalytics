@@ -6,40 +6,41 @@ disp('3. Plot of how students found out about drop-in');
 disp('4. Plot of roles drop-in students were applying for');
 disp('5. Plot of the year levels of drop-in students');
 disp('6. Plot of organisations drop-in students were applying to');
+disp('7. Plot of drop in attendance over time');
 disp(newline);
 disp('Recruitment Survey Plots');
-disp('7. Plot of roles students applied to');
-disp('8. Plot of reasons for not applying');
-disp('9. Plot of extra-curriculars students take part in');
-disp('10. Plot of stages students are in');
-disp('11. Plot of business school events students attended')
-disp('12. Plot of degrees students are studying');
-disp('13. Plot of majors students are studying');
-disp('14. Plot of salaries offered to students for their roles')
-disp('15. Plot of genders of survey respondents')
-disp('16. Plot of NZ residency status of students')
-disp('17. Plot of application progression of students')
-disp('18. Plot of top/most popular employers')
+disp('8. Plot of roles students applied to');
+disp('9. Plot of reasons for not applying');
+disp('10. Plot of extra-curriculars students take part in');
+disp('11. Plot of stages students are in');
+disp('12. Plot of business school events students attended')
+disp('13. Plot of degrees students are studying');
+disp('14. Plot of majors students are studying');
+disp('15. Plot of salaries offered to students for their roles')
+disp('16. Plot of genders of survey respondents')
+disp('17. Plot of NZ residency status of students')
+disp('18. Plot of application progression of students')
+disp('19. Plot of top/most popular employers')
 disp(newline);
 disp('P2B Survey Plots');
-disp('19. Plot of confidence of students in career areas before and after');
-disp('20. Plot of understanding after programme completion');
-disp('21. Plot of perceived value of group sessions');
-disp('22. Plot of perceived value of workshops');
-disp('23. Plot of perceived value of individual work');
-disp('24. Plot of how satisfied students were in using Canvas');
-disp('25. Plots of attendance at P2B events and workload');
+disp('20. Plot of confidence of students in career areas before and after');
+disp('21. Plot of understanding after programme completion');
+disp('22. Plot of perceived value of group sessions');
+disp('23. Plot of perceived value of workshops');
+disp('24. Plot of perceived value of individual work');
+disp('25. Plot of how satisfied students were in using Canvas');
+disp('26. Plots of attendance at P2B events and workload');
 disp(newline);
 disp('LinkedIn Destinations Plots');
-disp('26. Plot of most popular majors of graduates');
-disp('27. Plots of jobs taken by graduates in current period');
-disp('28. Plots of jobs taken by graduates in previous period');
-disp('29. Plots of jobs taken by graduates in 2nd furthest period');
-disp('30. Plots of jobs taken by graduates in furthest period');
-disp('31. Plot of companies worked at by graduates in current period');
-disp('32. Plot of companies worked at by graduates in previous period');
-disp('33. Plot of companies worked at by graduates in 2nd furthest period');
-disp('34. Plot of companies worked at by graduates in furthest period');
+disp('27. Plot of most popular majors of graduates');
+disp('28. Plots of jobs taken by graduates in current period');
+disp('29. Plots of jobs taken by graduates in previous period');
+disp('30. Plots of jobs taken by graduates in 2nd furthest period');
+disp('31. Plots of jobs taken by graduates in furthest period');
+disp('32. Plot of companies worked at by graduates in current period');
+disp('33. Plot of companies worked at by graduates in previous period');
+disp('34. Plot of companies worked at by graduates in 2nd furthest period');
+disp('35. Plot of companies worked at by graduates in furthest period');
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered
@@ -93,60 +94,62 @@ try
         case 6
             OrganisationPlot(file_name);
         case 7
-            RoleApplicationPlot(file_name, headings);
+            MonthAttendancePlot(file_name);
         case 8
-            ReasonsNotApplyPlot(file_name, headings);
+            RoleApplicationPlot(file_name, headings);
         case 9
-            ExtracurricularsPlot(file_name, headings);
+            ReasonsNotApplyPlot(file_name, headings);
         case 10
-            StagesPlot(file_name, headings);
+            ExtracurricularsPlot(file_name, headings);
         case 11
-            EventAttendancePlot(file_name, headings);
+            StagesPlot(file_name, headings);
         case 12
-            StudyDegreePlot(file_name, headings);
+            EventAttendancePlot(file_name, headings);
         case 13
-            MajorsPlot(file_name, headings);
+            StudyDegreePlot(file_name, headings);
         case 14
-            SalaryPlot(file_name, headings);
+            MajorsPlot(file_name, headings);
         case 15
-            GenderPlot(file_name, headings);
+            SalaryPlot(file_name, headings);
         case 16
-            NZResidencyPlot(file_name, headings);
+            GenderPlot(file_name, headings);
         case 17
-            ApplicationProgressionPlot(file_name, top_headings, bottom_headings);
+            NZResidencyPlot(file_name, headings);
         case 18
-            TopEmployersPlot(file_name, top_headings, bottom_headings);
+            ApplicationProgressionPlot(file_name, top_headings, bottom_headings);
         case 19
-            ConfidencePlot(file_name);
+            TopEmployersPlot(file_name, top_headings, bottom_headings);
         case 20
-            UnderstandingProgrammePlot(file_name);
+            ConfidencePlot(file_name);
         case 21
-            GroupSessionPlot(file_name);
+            UnderstandingProgrammePlot(file_name);
         case 22
-            WorkshopPlot(file_name);
+            GroupSessionPlot(file_name);
         case 23
-            IndividualWorkPlot(file_name);
+            WorkshopPlot(file_name);
         case 24
-            CanvasSatisfactionPlot(file_name);
+            IndividualWorkPlot(file_name);
         case 25
-            WorkloadAttendancePlot(file_name);
+            CanvasSatisfactionPlot(file_name);
         case 26
-            DestinationsMajorsPlot(file_name);
+            WorkloadAttendancePlot(file_name);
         case 27
-            JobTitlesPlot(file_name, 4);
+            DestinationsMajorsPlot(file_name);
         case 28
-            JobTitlesPlot(file_name, 1);
+            JobTitlesPlot(file_name, 4);
         case 29
-            JobTitlesPlot(file_name, 2);
+            JobTitlesPlot(file_name, 1);
         case 30
-            JobTitlesPlot(file_name, 3);
+            JobTitlesPlot(file_name, 2);
         case 31
-            CompaniesPlot(file_name, 4);
+            JobTitlesPlot(file_name, 3);
         case 32
-            CompaniesPlot(file_name, 1);
+            CompaniesPlot(file_name, 4);
         case 33
-            CompaniesPlot(file_name, 2);
+            CompaniesPlot(file_name, 1);
         case 34
+            CompaniesPlot(file_name, 2);
+        case 35
             CompaniesPlot(file_name, 3);
     end
 catch
