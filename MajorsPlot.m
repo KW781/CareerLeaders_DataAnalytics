@@ -1,4 +1,4 @@
-function [] = MajorsPlot(file_name, headings)
+function [] = MajorsPlot(file_name, top_headings, bottom_headings)
     table_raw = readtable(file_name);
     table = table2cell(table_raw);
     
@@ -7,14 +7,14 @@ function [] = MajorsPlot(file_name, headings)
     column_number = -1;
     head_found = 0;
     num_options = 0;
-    for i = 1 : length(headings)
-        if strcmp(headings{i}, 'My Commerce majors/subjects are:')
+    for i = 1 : length(top_headings)
+        if strcmp(top_headings{i}, 'My Commerce majors/subjects are:')
             column_number = i;
             head_found = 1;
         end
         if head_found
             %check if heading value is not null, indicating we've reached end of question section
-            null = isnan(headings{i});
+            null = isnan(top_headings{i});
             if length(null) > 1
                 null = 0;
             end
@@ -31,8 +31,8 @@ function [] = MajorsPlot(file_name, headings)
     
     %set up the majors cell array and the major counters
     majors = {};
-    for i = 1 : num_options
-        majors{i} = '';
+    for i = column_number : column_number - 1 + num_options
+        majors{i - column_number + 1} = bottom_headings{i};
     end
     major_counters = zeros(1, length(majors));
     
@@ -51,9 +51,6 @@ function [] = MajorsPlot(file_name, headings)
             %only increment if the current element is both not empty string and not null
             if ~strcmp(table{row, col}, '') && ~null
                 major_counters(col - column_number + 1) = major_counters(col - column_number + 1) + 1; %increment the counter for the appropriate event
-                if strcmp(majors{col - column_number + 1}, '')
-                    majors{col - column_number + 1} = table{row, col}; %copy the event into the events array if not already there
-                end
             end
         end
     end
