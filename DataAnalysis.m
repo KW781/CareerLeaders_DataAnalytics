@@ -79,7 +79,7 @@ elseif plot_number >= 17 && plot_number <= 18 || plot_number == 14
 end
     
 
-% try
+try
     switch plot_number
         case 1
             FirstTimePlot(file_name);
@@ -152,11 +152,11 @@ end
         case 35
             CompaniesPlot(file_name, 3);
     end
-% catch
-%     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
-%     if plot_number >= 26 && plot_number <= 34
-%         disp('You are generating a plot for the LinkedIn Destinations project. Make sure you have entered the data into the spreadsheet correctly.');
-%     end
-% end
+catch
+    disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
+    if plot_number >= 26 && plot_number <= 34
+        disp('You are generating a plot for the LinkedIn Destinations project. Make sure you have entered the data into the spreadsheet correctly.');
+    end
+end
 
 
