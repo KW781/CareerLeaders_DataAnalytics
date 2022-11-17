@@ -5,7 +5,7 @@ function [] = GenderPlot(file_name, headings)
     %find the column number with the gender data
     column_number = -1;
     for i = 1 : length(headings)
-        if WithinWord('gender', headings{i}) && WithinWord('identif', headings{i})
+        if WithinWord('gender', headings{i}) && WithinWord('identify', headings{i})
             column_number = i;
             break;
         end
