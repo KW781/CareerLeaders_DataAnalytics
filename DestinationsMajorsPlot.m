@@ -27,11 +27,11 @@ function [] = DestinationsMajorsPlot(file_name)
     major_counters = zeros(1, length(majors));
     
     %count the majors studied by the students
-    for col = column_number : column_number + 1 
+    for col = column_number : column_number + 2 
         for row = 1 : num_students 
             for i = 1 : length(majors)
                 %compare the major across all the identifers (not case sensitive)
-                if strcmpi(table{row, col}, major_identifiers{i})
+                if WithinWord(major_identifiers{i}, table{row, col})
                     major_counters(i) = major_counters(i) + 1; %increment the counter if match occurs
                     break;
                 end
@@ -65,6 +65,6 @@ function [] = DestinationsMajorsPlot(file_name)
     labels1 = string(bar_plot(1).YData) + '%';
     text(xtips1,ytips1,labels1,'VerticalAlignment','middle');  %add text labels for the percentage to each bar
     title('Percentages of graduates studying each major');
-    xlabel('Major')
-    ylabel('Percentage of graduates')    
+    xlabel('Percentage of graduates')
+    ylabel('Majors')    
 end
