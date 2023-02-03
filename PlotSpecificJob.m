@@ -25,6 +25,11 @@ function [] = PlotSpecificJob(table, col_num, job, fig_num)
         end
     end
     
+    %end early if there were no specific jobs containing the general title
+    if length(job_types) == 0
+        return;
+    end
+    
     ordinal_job_types = categorical(job_types); %convert strings to categorical type
     
     %reorder categories since categorical() alphabetises them
@@ -37,9 +42,11 @@ function [] = PlotSpecificJob(table, col_num, job, fig_num)
     bar_plot.CData = colours; %colour in the bars
     xtips1 = bar_plot(1).YEndPoints + 0.3;
     ytips1 = bar_plot(1).XEndPoints;
+    xlim([0, max(job_type_counters) + 1]); %set the upper and lower limits of the x-axis numbers
+    xticks(0 : 1 : max(job_type_counters) + 1); %set step size of x-axis to be 1 so only integers are shown
     labels1 = string(bar_plot(1).YData);
     text(xtips1,ytips1,labels1,'VerticalAlignment','middle');  %add text labels for the percentage to each bar
     title(['Number of graduates in a ', job, ' role working in specific areas']);
-    xlabel('Role area')
-    ylabel('Number of graduates')       
+    xlabel('Number of graduates')
+    ylabel('Role area')       
 end

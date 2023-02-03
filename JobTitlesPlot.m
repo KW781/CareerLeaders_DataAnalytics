@@ -19,10 +19,11 @@ function [] = JobTitlesPlot(file_name, recent_param)
     %extract data dimensions and create job title arrays
     dimensions = size(table);
     num_students = dimensions(1);
-    %Note that 'None' and 'Other' should ALWAYS be the 2nd to last and last elements respectively in the job_titles array
+    %Note that 'Other' should ALWAYS be the last element in the job_titles array
     job_titles = {'Manager', 'Auditor', 'Accountant', 'Banking', 'Advisor',...
                     'Administrator', 'Consultant', 'Analyst',...
-                    'Engineer', 'Associate', 'None', 'Other'};
+                    'Engineer', 'Associate', 'Marketing', 'Solicitor',...
+                    'Other'};
     job_title_counters = zeros(1, length(job_titles));
     
     %count students with the job titles
@@ -36,15 +37,17 @@ function [] = JobTitlesPlot(file_name, recent_param)
             null = 1; %set to null if the element is an empty string
         end
         
-        if null
-            %increment the 'None' count if current table element is null (null is stored in the 2nd to last element)
-            job_title_counters(length(job_title_counters) - 1) = job_title_counters(length(job_title_counters) - 1) + 1;
-        else
+        if ~null
+            found = 0;
             for j = 1 : length(job_titles)
-                if strcmpi(table{i, column_number}, job_titles{j})
+                if WithinWord(job_titles{j}, table{i, column_number})
                     job_title_counters(j) = job_title_counters(j) + 1;
+                    found = 1;
                     break;
                 end
+            end
+            if ~found
+                job_title_counters(length(job_title_counters)) = job_title_counters(length(job_title_counters)) + 1;
             end
         end
     end
@@ -57,7 +60,7 @@ function [] = JobTitlesPlot(file_name, recent_param)
         if round((job_title_counters(i) / num_students) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_job_titles{options_index} = job_titles{i};
-            job_title_proportions(options_index) = round((job_title_counters(i) / num_students) * 100, 2);
+            job_title_proportions(options_index) = round((job_title_counters(i) / sum(job_title_counters)) * 100, 2);
         end
     end
     
@@ -80,10 +83,10 @@ function [] = JobTitlesPlot(file_name, recent_param)
         max = max - 1;
     end
     
-    %plot the specific job types for the top 3 job titles, while excluding 'None' and 'Other'
-    num_jobs = 0; %counter for the number of jobs found that are not 'None' or 'Other'
+    %plot the specific job types for the top 3 job titles, while excluding 'Other'
+    num_jobs = 0; %counter for the number of jobs found that are not 'Other'
     for i = 1 : length(final_job_titles)
-        if ~(strcmp('None', final_job_titles{i}) || strcmp('Other', final_job_titles{i}))
+        if ~strcmp('Other', final_job_titles{i})
             num_jobs = num_jobs + 1;
             PlotSpecificJob(table, column_number + 1, final_job_titles{i}, num_jobs)
         end
@@ -102,7 +105,7 @@ function [] = JobTitlesPlot(file_name, recent_param)
     colours = rand(length(ordinal_final_job_titles), 3); %generate the colours for the bars
     %create percentage symbols array (because they need to be appended to the numbers when plotting)
     percent_arr = '';
-    for i = 1 : length(organisation_proportions)
+    for i = 1 : length(job_title_proportions)
         percent_arr = [percent_arr; '%'];
     end
     %plot the actual data with colours and percent symbols generated
