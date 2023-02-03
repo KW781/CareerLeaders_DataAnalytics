@@ -52,26 +52,51 @@ function [] = CompaniesPlot(file_name, recent_param)
         end
     end
     
-    %calculate the percentages from the counters
-    company_proportions = [];
-    for i = 1 : length(company_counters)
-        company_proportions(i) = round((company_counters(i) / sum(company_counters)) * 100, 2);
+    %sort company counters in descending order using bubble sort
+    no_more_swaps = 0;
+    max_index = length(company_counters) - 1; 
+    while ~no_more_swaps
+        no_more_swaps = 1;
+        for i = 1 : max_index
+            if company_counters(i) < company_counters(i + 1)
+                temp_count = company_counters(i);
+                company_counters(i) = company_counters(i + 1);
+                company_counters(i + 1) = temp_count;
+                temp_comp = companies{i};
+                companies{i} = companies{i + 1};
+                companies{i + 1} = temp_comp;
+                no_more_swaps = 0;
+            end
+        end
+        max_index = max_index - 1;
     end
     
-    ordinal_companies = categorical(companies); %convert the strings to categorical type
+    %take only the top 10 companies
+    if length(company_counters) > 15
+        company_counters = company_counters(1 : 15);
+        final_companies = {};
+        for i = 1 : 15
+            final_companies{i} = companies{i};
+        end
+    else
+        final_companies = companies;
+    end
+    
+    ordinal_companies = categorical(final_companies); %convert the strings to categorical type
     
     %reorder the categories, since categorical() alphabetises them
-    ordinal_companies = reordercats(ordinal_companies, companies);
+    ordinal_companies = reordercats(ordinal_companies, final_companies);
     
     %plot the data
     colours = rand(length(ordinal_companies), 3); %randomly generate colours for bars
-    bar_plot = barh(ordinal_companies, company_proportions, 'facecolor', 'flat');
+    bar_plot = barh(ordinal_companies, company_counters, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars
     xtips1 = bar_plot(1).YEndPoints + 0.3;
     ytips1 = bar_plot(1).XEndPoints;
-    labels1 = string(bar_plot(1).YData) + '%';
+    xlim([0, max(company_counters) + 1]); %set the upper and lower limits of the x-axis numbers
+    labels1 = string(bar_plot(1).YData);
     text(xtips1,ytips1,labels1,'VerticalAlignment','middle');  %add text labels for the percentage to each bar
-    title('Percentages of graduates working at each company');
+    title('Number of graduates working at top 15 companies');
     xlabel('Company')
-    ylabel('Percentage of graduates')     
+    ylabel('Number of graduates')     
 end
