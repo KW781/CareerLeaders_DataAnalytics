@@ -66,10 +66,10 @@ function [] = JobTitlesPlot(file_name, recent_param)
     
     %sort job titles in descending order using bubble sort
     no_more_swaps = 0;
-    max = length(job_title_proportions) - 1; 
+    max_index = length(job_title_proportions) - 1; 
     while ~no_more_swaps
         no_more_swaps = 1;
-        for i = 1 : max
+        for i = 1 : max_index
             if job_title_proportions(i) < job_title_proportions(i + 1)
                 temp_prop = job_title_proportions(i);
                 temp_title = final_job_titles{i};
@@ -80,7 +80,7 @@ function [] = JobTitlesPlot(file_name, recent_param)
                 no_more_swaps = 0;
             end
         end
-        max = max - 1;
+        max_index = max_index - 1;
     end
     
     %plot the specific job types for the top 3 job titles, while excluding 'Other'
@@ -111,6 +111,9 @@ function [] = JobTitlesPlot(file_name, recent_param)
     %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_job_titles, job_title_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, min([100, max([limits(2), max(job_title_proportions) + 5, max(job_title_proportions) * 1.1])])]);
     text(1 : length(job_title_proportions),...
         job_title_proportions,...
         [num2str(job_title_proportions'), percent_arr],...

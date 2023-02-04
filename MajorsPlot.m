@@ -84,6 +84,9 @@ function [] = MajorsPlot(file_name, top_headings, bottom_headings)
     %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_majors, final_major_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars for the bar plot
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, min([100, max([limits(2), max(final_major_proportions) + 5, max(final_major_proportions) * 1.1])])]);
     text(1 : length(final_major_proportions),...
         final_major_proportions,...
         [num2str(final_major_proportions'), percent_arr],...

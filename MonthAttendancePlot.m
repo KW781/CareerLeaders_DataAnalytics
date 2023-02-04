@@ -35,6 +35,9 @@ function [] = MonthAttendancePlot(file_name)
     colours = rand(length(ordinal_months), 3); %randomly generate colours for the bars
     bar_plot = bar(ordinal_months, month_counters, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, max([limits(2), max(month_counters) + 3, max(month_counters) * 1.1])]);
     text(1 : length(month_counters),...
         month_counters,...
         num2str(month_counters'),...

@@ -80,6 +80,9 @@ function [] = EventAttendancePlot(file_name, headings)
     colours = rand(length(ordinal_final_events), 3); %generate the colours for the bars
     bar_plot = barh(ordinal_final_events, final_event_counters, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
+    %set the upper and lower limits of the x-axis numbers
+    limits = xlim;
+    xlim([0, max([limits(2), max(final_event_counters) + 3, max(final_event_counters) * 1.1])]);
     xtips1 = bar_plot(1).YEndPoints + 0.3;
     ytips1 = bar_plot(1).XEndPoints;
     labels1 = string(bar_plot(1).YData);

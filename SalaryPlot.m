@@ -216,6 +216,9 @@ function [] = SalaryPlot(file_name, headings)
     subplot(1, 2, 2);
     bar_plot = bar(ordinal_prog_salaries, grad_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars for the bar plot
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, min([100, max([limits(2), max(grad_proportions) + 5, max(grad_proportions) * 1.1])])]);
     text(1 : length(grad_proportions),...
         grad_proportions,...
         [num2str(grad_proportions'), prog_percent_arr],...

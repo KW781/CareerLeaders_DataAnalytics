@@ -90,11 +90,14 @@ function [] = OrganisationPlot(file_name)
     %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_organisations, organisation_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, min([100, max([limits(2), max(organisation_proportions) + 5, max(organisation_proportions) * 1.1])])]);
     text(1 : length(organisation_proportions),...
         organisation_proportions,...
         [num2str(organisation_proportions'), percent_arr],...
         'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
-    title('What organisation are you applying for? (2021)');
+    title('What organisation are you applying for? (Top 10 shown)');
     xlabel('Organisation');
     ylabel('Percentage of students');
 end

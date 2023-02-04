@@ -101,6 +101,9 @@ function [] = ApplicationProgressionPlot(file_name, top_headings, bottom_heading
     colours = rand(length(ordinal_final_app_stages), 3);
     bar_plot = bar(ordinal_final_app_stages, final_app_stage_counters, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars for the bar plot
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, max([limits(2), max(final_app_stage_counters) + 3, max(final_app_stage_counters)] * 1.1)]);
     text(1 : length(final_app_stage_counters),...
         final_app_stage_counters,...
         num2str(final_app_stage_counters'),...

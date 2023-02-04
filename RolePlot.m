@@ -90,6 +90,9 @@ function [] = RolePlot(file_name)
     %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_roles, role_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colours in the bars in the plot
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, min([100, max([limits(2), max(role_proportions) + 5, max(role_proportions) * 1.1])])]);
     text(1 : length(role_proportions),...
         role_proportions,...
         [num2str(role_proportions'), percent_arr],...

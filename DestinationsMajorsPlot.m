@@ -60,6 +60,9 @@ function [] = DestinationsMajorsPlot(file_name)
     colours = rand(length(ordinal_final_majors), 3); %randomly generate colours for bars
     bar_plot = barh(ordinal_final_majors, major_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars
+    %set the upper and lower limits of the x-axis numbers
+    limits = xlim;
+    xlim([0, min([100, max([limits(2), max(major_proportions) + 5, max(major_proportions) * 1.1])])]);
     xtips1 = bar_plot(1).YEndPoints + 0.3;
     ytips1 = bar_plot(1).XEndPoints;
     labels1 = string(bar_plot(1).YData) + '%';

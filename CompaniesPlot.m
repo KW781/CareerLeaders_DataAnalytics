@@ -91,9 +91,11 @@ function [] = CompaniesPlot(file_name, recent_param)
     colours = rand(length(ordinal_companies), 3); %randomly generate colours for bars
     bar_plot = barh(ordinal_companies, company_counters, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars
+    %set the upper and lower limits of the x-axis numbers
+    limits = xlim;
+    xlim([0, max([limits(2), max(company_counters) + 3, max(company_counters) * 1.1])]);
     xtips1 = bar_plot(1).YEndPoints + 0.3;
     ytips1 = bar_plot(1).XEndPoints;
-    xlim([0, max(company_counters) + 1]); %set the upper and lower limits of the x-axis numbers
     labels1 = string(bar_plot(1).YData);
     text(xtips1,ytips1,labels1,'VerticalAlignment','middle');  %add text labels for the percentage to each bar
     title('Number of graduates working at top 15 companies');

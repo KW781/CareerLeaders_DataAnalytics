@@ -71,6 +71,9 @@ function [] = AttendancePurposePlot(file_name)
     %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_final_purpose_options, purpose_proportions, 'facecolor', 'flat');  
     bar_plot.CData = colours; %colour in the bars
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, min([100, max([limits(2), max(purpose_proportions) + 5, max(purpose_proportions) * 1.1])])]);
     text(1 : length(purpose_proportions),...
         purpose_proportions,...
         [num2str(purpose_proportions'), percent_arr],...

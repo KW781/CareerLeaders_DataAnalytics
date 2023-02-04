@@ -60,6 +60,9 @@ function [] = RoleApplicationPlot(file_name, headings)
     %plot the actual data with colours and percent symbols generated
     bar_plot = bar(ordinal_application_responses, application_proportions, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars for the bar plot
+    %set the upper and lower limits of the y-axis numbers
+    limits = ylim;
+    ylim([0, min([100, max([limits(2), max(application_proportions) + 5, max(application_proportions) * 1.1])])]);
     text(1 : length(application_proportions),...
         application_proportions,...
         [num2str(application_proportions'), percent_arr],...

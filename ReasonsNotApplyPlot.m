@@ -78,6 +78,9 @@ function [] = ReasonsNotApplyPlot(file_name, headings)
     colours = rand(length(ordinal_final_reasons), 3); %generate the colours for the bars
     bar_plot = barh(ordinal_final_reasons, final_reason_counters, 'facecolor', 'flat');
     bar_plot.CData = colours; %colour in the bars in the plot
+    %set the upper and lower limits of the x-axis numbers
+    limits = xlim;
+    xlim([0, max([limits(2), max(final_reason_counters) + 3, max(final_reason_counters) * 1.1])]);
     xtips1 = bar_plot(1).YEndPoints + 0.3;
     ytips1 = bar_plot(1).XEndPoints;
     labels1 = string(bar_plot(1).YData);
