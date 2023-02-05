@@ -154,7 +154,7 @@ try
     end
 catch
     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
-    if plot_number >= 26 && plot_number <= 34
+    if plot_number >= 27 && plot_number <= 35
         disp('You are generating a plot for the LinkedIn Destinations project. Make sure you have entered the data into the spreadsheet correctly.');
     end
 end
