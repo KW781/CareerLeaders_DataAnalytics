@@ -48,6 +48,15 @@ plot_number = -1;
 while ~(plot_number >= 1 && plot_number <= 35)
     plot_number = input('Enter which number plot you want: ');
 end
+%if a drop-in plot is wanted, ask for the time period for which they want the plot
+if plot_number >= 1 && plot_number <= 6
+    disp(newline);
+    disp('You are generating a plot for the drop-in form. Enter a number for the time period you want to generate it for.');
+    disp('1. First semester');
+    disp('2. Second semester');
+    disp('3. Whole year');
+    time_period_num = input('Enter which number time period you want: ');
+end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
 
 %remove leading and trailing quotation marks
@@ -81,18 +90,18 @@ end
 
 try
     switch plot_number
-        case 1
-            FirstTimePlot(file_name);
+        case -3
+            FirstTimePlot(file_name, time_period_num);
         case 2
-            AttendancePurposePlot(file_name);
+            AttendancePurposePlot(file_name, time_period_num);
         case 3
-            FoundOutMethodPlot(file_name);
+            FoundOutMethodPlot(file_name, time_period_num);
         case 4
-            RolePlot(file_name);
+            RolePlot(file_name, time_period_num);
         case 5
-            YearLevelPlot(file_name);
+            YearLevelPlot(file_name, time_period_num);
         case 6
-            OrganisationPlot(file_name);
+            OrganisationPlot(file_name, time_period_num);
         case 7
             MonthAttendancePlot(file_name);
         case 8

@@ -1,8 +1,8 @@
-function [] = FoundOutMethodPlot(file_name)
+function [] = FoundOutMethodPlot(file_name, time_period_num)
     table_raw = readtable(file_name);
     table = table2cell(table_raw); %read table data
     
-    %find the column number with the data
+    %find the column number with the found out method data
     column_number = -1;
     headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
@@ -11,27 +11,50 @@ function [] = FoundOutMethodPlot(file_name)
             break
         end
     end
+    
+    %find column number with the timestamp data
+    headings = table_raw.Properties.VariableDescriptions;
+    date_column_number = -1;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'Timestamp')
+            date_column_number = i;
+            break;
+        end
+    end
 
     dimensions = size(table);
     num_students = dimensions(1);
     methods = {'Business School Website', 'BizStudent Update (email)', 'Workshop or event', 'Plasma screen'};
     methods_count = zeros(1, length(methods)); %initialise method counters to zero
     other_count = 0; %count how many entries are 'other'
+    num_students_time_period = 0; %counts the number of students that fall within the time period requested
     
     %count how many selected each option then total them
     for i = 1 : num_students
-        current_methods = split(table{i, column_number}, ', ');
-        for j = 1 : length(current_methods)
-            match = 0; %initialise the match flag to false
-            for k = 1 : length(methods)
-                if strcmp(current_methods{j}, methods{k})
-                    match = 1;
-                    methods_count(k) = methods_count(k) + 1;
-                    break; %exit the search for the current category if a match was found
+        %only count data that falls within the time period requested
+        month_num = month(table{i, date_column_number});
+        data_included = 1;
+        if time_period_num == 1
+            data_included = month_num >= 1 && month_num <= 6;
+        elseif time_period_num == 2
+            data_included = month_num >= 7 && month_num <= 12;
+        end
+        
+        if data_included
+            num_students_time_period = num_students_time_period + 1;
+            current_methods = split(table{i, column_number}, ', ');
+            for j = 1 : length(current_methods)
+                match = 0; %initialise the match flag to false
+                for k = 1 : length(methods)
+                    if strcmp(current_methods{j}, methods{k})
+                        match = 1;
+                        methods_count(k) = methods_count(k) + 1;
+                        break; %exit the search for the current category if a match was found
+                    end
                 end
-            end
-            if ~match
-                other_count = other_count + 1; %increment other count if no match was found
+                if ~match
+                    other_count = other_count + 1; %increment other count if no match was found
+                end
             end
         end
     end
@@ -45,7 +68,7 @@ function [] = FoundOutMethodPlot(file_name)
         if methods_count(i) ~= 0
             options_index = options_index + 1;
             final_methods{options_index} = methods{i};
-            method_proportions(options_index) = (methods_count(i) / num_students) * 100;
+            method_proportions(options_index) = (methods_count(i) / num_students_time_period) * 100;
         end
     end
     %add on the category of 'other' if that was non-zero

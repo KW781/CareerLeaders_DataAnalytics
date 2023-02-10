@@ -1,8 +1,8 @@
-function [] = YearLevelPlot(file_name)
+function [] = YearLevelPlot(file_name, time_period_num)
     table_raw = readtable(file_name);
     table = table2cell(table_raw); %read table data
     
-    %find the column number with the data
+    %find the column number with the year level data
     column_number = -1;
     headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
@@ -11,19 +11,42 @@ function [] = YearLevelPlot(file_name)
             break
         end
     end
+    
+    %find column number with the timestamp data
+    headings = table_raw.Properties.VariableDescriptions;
+    date_column_number = -1;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'Timestamp')
+            date_column_number = i;
+            break;
+        end
+    end
 
     dimensions = size(table);
     num_students = dimensions(1);
     year_levels = {'First year', 'Second year', 'Third year', 'Third year+', 'Masters', 'PhD', 'Other'};
     year_levels_count = zeros(1, length(year_levels)); %initialise the year level counters to zero
+    num_students_time_period = 0; %counts the number of students that fall within the time period requested
     
     %count how many selected each option then total them
     for i = 1 : num_students
-        current_year_level = table{i, column_number};
-        for j = 1 : length(year_levels)
-            if strcmp(current_year_level, year_levels{j})
-                year_levels_count(j) = year_levels_count(j) + 1;
-                break;
+        %only count data that falls within the time period requested
+        month_num = month(table{i, date_column_number});
+        data_included = 1;
+        if time_period_num == 1
+            data_included = month_num >= 1 && month_num <= 6;
+        elseif time_period_num == 2
+            data_included = month_num >= 7 && month_num <= 12;
+        end
+        
+        if data_included
+            current_year_level = table{i, column_number};
+            num_students_time_period = num_students_time_period + 1;
+            for j = 1 : length(year_levels)
+                if strcmp(current_year_level, year_levels{j})
+                    year_levels_count(j) = year_levels_count(j) + 1;
+                    break;
+                end
             end
         end
     end
@@ -37,7 +60,7 @@ function [] = YearLevelPlot(file_name)
         if year_levels_count(i) ~= 0
             options_index = options_index + 1;
             final_year_levels{options_index} = year_levels{i};
-            year_level_proportions(options_index) = (year_levels_count(i) / num_students) * 100;
+            year_level_proportions(options_index) = (year_levels_count(i) / num_students_time_period) * 100;
         end
     end
     

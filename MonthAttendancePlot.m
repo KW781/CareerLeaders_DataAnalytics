@@ -2,7 +2,7 @@ function [] = MonthAttendancePlot(file_name)
     table_raw = readtable(file_name);
     table = table2cell(table_raw); %read table data
     
-    %find column number with the data
+    %find column number with the timestamp data
     headings = table_raw.Properties.VariableDescriptions;
     column_number = -1;
     for i = 1 : length(headings)

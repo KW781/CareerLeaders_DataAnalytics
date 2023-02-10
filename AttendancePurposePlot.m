@@ -1,8 +1,8 @@
-function [] = AttendancePurposePlot(file_name)
+function [] = AttendancePurposePlot(file_name, time_period_num)
     table_raw = readtable(file_name);
     table = table2cell(table_raw); %read table data
     
-    %find the column number with the data
+    %find the column number with the attendance purpose data
     column_number = -1;
     headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
@@ -11,27 +11,50 @@ function [] = AttendancePurposePlot(file_name)
             break
         end
     end
+    
+    %find column number with the timestamp data
+    headings = table_raw.Properties.VariableDescriptions;
+    date_column_number = -1;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'Timestamp')
+            date_column_number = i;
+            break;
+        end
+    end
 
     dimensions = size(table);
     num_students = dimensions(1);
     purpose_options = {'CV check', 'Career advice', 'LinkedIn check', 'Cover letter check', 'Application form check'}; %store the different options for the purpose
     purpose_count = zeros(1, length(purpose_options)); %initialise purpose counters to zero
     other_count = 0; %count how many entries are 'other'
+    num_students_time_period = 0; %counts the number of students that fall within the time period requested
     
     %count how many selected each option then total them
     for i = 1 : num_students
-        current_purposes = split(table{i, column_number}, ', ');
-        for j = 1 : length(current_purposes)
-            match = 0; %initialise the match flag to false
-            for k = 1 : length(purpose_options)
-                if strcmp(purpose_options{k}, current_purposes{j})
-                    match = 1;
-                    purpose_count(k) = purpose_count(k) + 1;
-                    break; %exit the search for the current cateogory if a match was found
+        %only count data that falls within the time period requested
+        month_num = month(table{i, date_column_number});
+        data_included = 1;
+        if time_period_num == 1
+            data_included = month_num >= 1 && month_num <= 6;
+        elseif time_period_num == 2
+            data_included = month_num >= 7 && month_num <= 12;
+        end
+        
+        if data_included
+            num_students_time_period = num_students_time_period + 1;
+            current_purposes = split(table{i, column_number}, ', ');
+            for j = 1 : length(current_purposes)
+                match = 0; %initialise the match flag to false
+                for k = 1 : length(purpose_options)
+                    if strcmp(purpose_options{k}, current_purposes{j})
+                        match = 1;
+                        purpose_count(k) = purpose_count(k) + 1;
+                        break; %exit the search for the current cateogory if a match was found
+                    end
                 end
-            end
-            if ~match
-                other_count = other_count + 1; %increment other_count if no match was found
+                if ~match
+                    other_count = other_count + 1; %increment other_count if no match was found
+                end
             end
         end
     end
@@ -52,7 +75,7 @@ function [] = AttendancePurposePlot(file_name)
     if other_count ~= 0
         options_index = options_index + 1;
         final_purpose_options{options_index} = 'Other';
-        purpose_proportions(options_index) = (other_count / num_students) * 100;
+        purpose_proportions(options_index) = (other_count / num_students_time_period) * 100;
     end
     
     ordinal_final_purpose_options = categorical(final_purpose_options); %convert strings to categorical type

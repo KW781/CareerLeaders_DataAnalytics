@@ -1,8 +1,8 @@
-function [] = OrganisationPlot(file_name)
+function [] = OrganisationPlot(file_name, time_period_num)
     table_raw = readtable(file_name);
     table = table2cell(table_raw); %read table data
     
-    %find the column number with the data
+    %find the column number with the organisation data
     column_number = -1;
     headings = table_raw.Properties.VariableDescriptions;
     for i = 1 : length(headings)
@@ -11,31 +11,52 @@ function [] = OrganisationPlot(file_name)
             break
         end
     end
+    
+    %find column number with the timestamp data
+    headings = table_raw.Properties.VariableDescriptions;
+    date_column_number = -1;
+    for i = 1 : length(headings)
+        if strcmp(headings{i}, 'Timestamp')
+            date_column_number = i;
+            break;
+        end
+    end
 
     dimensions = size(table);
     num_students = dimensions(1);
     organisations = {'P2B'}; %initialise organisations cell array to be populated, with at first just P2B
     organisations_count = [0];
     
-    organisation_index = 1; %initialise the index for the organisations array to zero
+    organisation_index = 1; %initialise the index for the organisations array to one
     for i = 1 : num_students
-        current_organisation = table{i, column_number};
-        if (length(current_organisation) ~= 0) && (~strcmpi(current_organisation, 'N/A'))
-            if (WithinWord('P2B', current_organisation)) || (WithinWord('Passport to Business', current_organisation))
-                organisations_count(1) = organisations_count(1) + 1;
-            else
-                match = 0; %initialise match flag to false
-                for j = 2 : length(organisations)
-                    if (WithinWord(organisations{j}, current_organisation)) || (WithinWord(current_organisation, organisations{j}))
-                        match = 1;
-                        organisations_count(j) = organisations_count(j) + 1;
-                        break;
+        %only count data that falls within the time period requested
+        month_num = month(table{i, date_column_number});
+        data_included = 1;
+        if time_period_num == 1
+            data_included = month_num >= 1 && month_num <= 6;
+        elseif time_period_num == 2
+            data_included = month_num >= 7 && month_num <= 12;
+        end
+        
+        if data_included
+            current_organisation = table{i, column_number};
+            if (length(current_organisation) ~= 0) && (~strcmpi(current_organisation, 'N/A'))
+                if (WithinWord('P2B', current_organisation)) || (WithinWord('Passport to Business', current_organisation))
+                    organisations_count(1) = organisations_count(1) + 1;
+                else
+                    match = 0; %initialise match flag to false
+                    for j = 2 : length(organisations)
+                        if (WithinWord(organisations{j}, current_organisation)) || (WithinWord(current_organisation, organisations{j}))
+                            match = 1;
+                            organisations_count(j) = organisations_count(j) + 1;
+                            break;
+                        end
                     end
-                end
-                if ~match
-                    organisation_index = organisation_index + 1;
-                    organisations{organisation_index} = current_organisation;
-                    organisations_count(organisation_index) = 1;
+                    if ~match
+                        organisation_index = organisation_index + 1;
+                        organisations{organisation_index} = current_organisation;
+                        organisations_count(organisation_index) = 1;
+                    end
                 end
             end
         end
