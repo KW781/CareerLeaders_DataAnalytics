@@ -65,17 +65,17 @@ function [] = AttendancePurposePlot(file_name, time_period_num)
     final_purpose_options = {}; %initialise cell array for final purpose options (ones where the count isn't zero)
     purpose_proportions = []; %initialise array for percentage of students choosing an option
     for i = 1 : length(purpose_count)
-        if purpose_count(i) ~= 0
+        if round((purpose_count(i) / num_students_time_period) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_purpose_options{options_index} = purpose_options{i};
-            purpose_proportions(options_index) = (purpose_count(i) / num_students) * 100;
+            purpose_proportions(options_index) = round((purpose_count(i) / num_students_time_period) * 100, 2);
         end
     end
     %add on the data for the category 'Other' if that was non-zero
-    if other_count ~= 0
+    if round((other_count / num_students_time_period) * 100, 2) ~= 0
         options_index = options_index + 1;
         final_purpose_options{options_index} = 'Other';
-        purpose_proportions(options_index) = (other_count / num_students_time_period) * 100;
+        purpose_proportions(options_index) = round((other_count / num_students_time_period) * 100, 2);
     end
     
     ordinal_final_purpose_options = categorical(final_purpose_options); %convert strings to categorical type

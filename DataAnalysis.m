@@ -94,7 +94,7 @@ end
 
 try
     switch plot_number
-        case -3
+        case 1
             FirstTimePlot(file_name, time_period_num);
         case 2
             AttendancePurposePlot(file_name, time_period_num);

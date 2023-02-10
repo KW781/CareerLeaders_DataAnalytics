@@ -57,10 +57,10 @@ function [] = YearLevelPlot(file_name, time_period_num)
     final_year_levels = {}; %initialise the cell array for the non-zero year levels
     year_level_proportions = [];
     for i = 1 : length(year_levels_count)
-        if year_levels_count(i) ~= 0
+        if round((year_levels_count(i) / num_students_time_period) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_year_levels{options_index} = year_levels{i};
-            year_level_proportions(options_index) = (year_levels_count(i) / num_students_time_period) * 100;
+            year_level_proportions(options_index) = round((year_levels_count(i) / num_students_time_period) * 100, 2);
         end
     end
     

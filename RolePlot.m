@@ -84,17 +84,17 @@ function [] = RolePlot(file_name, time_period_num)
     final_roles = {}; %initialise the cell array for the final non-zero roles selected
     role_proportions = []; %initialise the array for the non_zero percentages selecting a role
     for i = 1 : length(roles_count)
-        if roles_count(i) ~= 0
+        if round((roles_count(i) / num_students_time_period) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_roles{options_index} = roles{i};
-            role_proportions(options_index) = (roles_count(i) / num_students_time_period) * 100;
+            role_proportions(options_index) = round((roles_count(i) / num_students_time_period) * 100, 2);
         end
     end
     %add on the category of 'other' if that was non_zero
-    if other_count ~= 0 
+    if round((other_count / num_students) * 100, 2) ~= 0 
         options_index = options_index + 1;
         final_roles{options_index} = 'Other';
-        role_proportions(options_index) = (other_count / num_students) * 100;
+        role_proportions(options_index) = round((other_count / num_students) * 100, 2);
     end
     
     ordinal_final_roles = categorical(final_roles); %convert the strings to categorical type

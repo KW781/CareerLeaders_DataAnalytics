@@ -65,17 +65,17 @@ function [] = FoundOutMethodPlot(file_name, time_period_num)
     final_methods = {}; %initialise the cell array for the final non-zero methods selected
     method_proportions = []; %initialise the array for the non-zero percentages of students selecting a method
     for i = 1 : length(methods_count)
-        if methods_count(i) ~= 0
+        if round((methods_count(i) / num_students_time_period) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_methods{options_index} = methods{i};
-            method_proportions(options_index) = (methods_count(i) / num_students_time_period) * 100;
+            method_proportions(options_index) = round((methods_count(i) / num_students_time_period) * 100, 2);
         end
     end
     %add on the category of 'other' if that was non-zero
-    if other_count ~= 0
+    if round((other_count / num_students_time_period) * 100, 2) ~= 0
         options_index = options_index + 1;
         final_methods{options_index} = 'Other';
-        method_proportions(options_index) = (other_count / num_students) * 100;
+        method_proportions(options_index) = round((other_count / num_students_time_period) * 100, 2);
     end
     
     ordinal_final_methods = categorical(final_methods); %convert strings to categorical type
