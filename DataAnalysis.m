@@ -33,19 +33,20 @@ disp('26. Plots of attendance at P2B events and workload');
 disp(newline);
 disp('LinkedIn Destinations Plots');
 disp('27. Plot of most popular majors of graduates');
-disp('28. Plots of jobs taken by graduates in current period');
-disp('29. Plots of jobs taken by graduates in previous period');
-disp('30. Plots of jobs taken by graduates in 2nd furthest period');
-disp('31. Plots of jobs taken by graduates in furthest period');
-disp('32. Plot of companies worked at by graduates in current period');
-disp('33. Plot of companies worked at by graduates in previous period');
-disp('34. Plot of companies worked at by graduates in 2nd furthest period');
-disp('35. Plot of companies worked at by graduates in furthest period');
+disp('28. Plot of most popular conjoint majors of graduates')
+disp('29. Plots of jobs taken by graduates in current period');
+disp('30. Plots of jobs taken by graduates in previous period');
+disp('31. Plots of jobs taken by graduates in 2nd furthest period');
+disp('32. Plots of jobs taken by graduates in furthest period');
+disp('33. Plot of companies worked at by graduates in current period');
+disp('34. Plot of companies worked at by graduates in previous period');
+disp('35. Plot of companies worked at by graduates in 2nd furthest period');
+disp('36. Plot of companies worked at by graduates in furthest period');
 disp(newline);
 
 %request the plot number from the user, until a valid one is entered
 plot_number = -1;
-while ~(plot_number >= 1 && plot_number <= 35)
+while ~(plot_number >= 1 && plot_number <= 36)
     plot_number = input('Enter which number plot you want: ');
 end
 %if a drop-in plot is wanted, ask for the time period for which they want the plot
@@ -149,25 +150,27 @@ try
         case 27
             DestinationsMajorsPlot(file_name);
         case 28
-            JobTitlesPlot(file_name, 4);
+            DestinationsConjointMajorsPlot(file_name);
         case 29
-            JobTitlesPlot(file_name, 1);
+            JobTitlesPlot(file_name, 4);
         case 30
-            JobTitlesPlot(file_name, 2);
+            JobTitlesPlot(file_name, 1);
         case 31
-            JobTitlesPlot(file_name, 3);
+            JobTitlesPlot(file_name, 2);
         case 32
-            CompaniesPlot(file_name, 4);
+            JobTitlesPlot(file_name, 3);
         case 33
-            CompaniesPlot(file_name, 1);
+            CompaniesPlot(file_name, 4);
         case 34
-            CompaniesPlot(file_name, 2);
+            CompaniesPlot(file_name, 1);
         case 35
+            CompaniesPlot(file_name, 2);
+        case 36
             CompaniesPlot(file_name, 3);
     end
 catch
     disp('Something went wrong. Try again. Make sure you have given the correct spreadsheet for the plot you want.')
-    if plot_number >= 27 && plot_number <= 35
+    if plot_number >= 27 && plot_number <= 36
         disp('You are generating a plot for the LinkedIn Destinations project. Make sure you have entered the data into the spreadsheet correctly.');
     end
 end
