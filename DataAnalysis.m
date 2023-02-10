@@ -55,7 +55,11 @@ if plot_number >= 1 && plot_number <= 6
     disp('1. First semester');
     disp('2. Second semester');
     disp('3. Whole year');
-    time_period_num = input('Enter which number time period you want: ');
+    %loop until a valid time period number is entered
+    time_period_num = -1;
+    while ~(time_period_num >= 1 && time_period_num <= 3)
+        time_period_num = input('Enter which number time period you want: ');
+    end
 end
 file_name = input('Enter the file name of the spreadsheet you want to analyse: ', 's');
 
