@@ -40,7 +40,7 @@ function [] = StagesPlot(file_name, headings)
         if round((stage_counters(i) / sum(stage_counters)) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_stages{options_index} = stages{i};
-            stage_proportions(options_index) = round((stage_counters(i) / sum(stage_counters)) * 100, 2);
+            stage_proportions(options_index) = round(((stage_counters(i) / sum(stage_counters) + 0.4)) * 100, 2);
         end
     end
     
