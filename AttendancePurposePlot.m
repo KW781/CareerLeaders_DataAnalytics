@@ -36,7 +36,7 @@ function [] = AttendancePurposePlot(file_name, time_period_num)
         data_included = 1;
         if time_period_num == 1
             data_included = month_num >= 1 && month_num <= 6;
-        elseif time_period_num == 2
+        else
             data_included = month_num >= 7 && month_num <= 12;
         end
         
