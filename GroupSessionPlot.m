@@ -28,23 +28,11 @@ function [] = GroupSessionPlot(file_name)
     for col = column_number : column_number + length(group_sessions) - 1
         for row = 1 : num_students
             value = 0;
-            %check what the reponse is and set value accordingly
-            if strcmp(table{row, col}, 'Limited value')
-                value = 1;
-            elseif strcmp(table{row, col}, 'Slightly valuable')
-                value = 2;
-            elseif strcmp(table{row, col}, 'Valuable')
-                value = 3;
-            elseif strcmp(table{row, col}, 'Highly valuable')
-                value = 4;
-            end
-            if value ~= 0 %check that the question received a response 
-                %increment the perceived value
-                total_value_levels(col - column_number + 1) = total_value_levels(col - column_number + 1) + value;
-                %increment the number of responses for the current group
-                %session
-                num_responses(col - column_number + 1) = num_responses(col - column_number + 1) + 1;
-            end
+            %increment the perceived value
+            total_value_levels(col - column_number + 1) = total_value_levels(col - column_number + 1) + value;
+            %increment the number of responses for the current group
+            %session
+            num_responses(col - column_number + 1) = num_responses(col - column_number + 1) + 1;
         end
     end
     
