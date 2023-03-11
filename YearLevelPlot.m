@@ -60,7 +60,7 @@ function [] = YearLevelPlot(file_name, time_period_num)
         if round((year_levels_count(i) / num_students_time_period) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_year_levels{options_index} = year_levels{i};
-            year_level_proportions(options_index) = round((year_levels_count(i) / num_students_time_period) * 100, 2);
+            year_level_proportions(options_index) = 100;
         end
     end
     
