@@ -61,6 +61,7 @@ function [] = ApplicationProgressionPlot(file_name, top_headings, bottom_heading
                         %as well
                         if i > 1 && ~submit_app
                             app_stage_counters(1) = app_stage_counters(1) + 1;
+                            submit_app = 1;
                         end
                         %if stage is 'offered role', then set flag as appropriate
                         if i == length(app_stages) - 1
