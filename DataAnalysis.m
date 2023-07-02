@@ -13,14 +13,14 @@ disp('8. Plot of roles students applied to');
 disp('9. Plot of reasons for not applying');
 disp('10. Plot of extra-curriculars students take part in');
 disp('11. Plot of stages students are in');
-disp('12. Plot of business school events students attended')
+disp('12. Plot of business school events students attended');
 disp('13. Plot of degrees students are studying');
 disp('14. Plot of majors students are studying');
-disp('15. Plot of salaries offered to students for their roles')
-disp('16. Plot of genders of survey respondents')
-disp('17. Plot of NZ residency status of students')
-disp('18. Plot of application progression of students')
-disp('19. Plot of top/most popular employers')
+disp('15. Plot of salaries offered to students for their roles');
+disp('16. Plot of genders of survey respondents');
+disp('17. Plot of NZ residency status of students');
+disp('18. Plot of application progression of students');
+disp('19. Plot of top/most popular employers');
 disp(newline);
 disp('P2B Survey Plots');
 disp('20. Plot of confidence of students in career areas before and after');
