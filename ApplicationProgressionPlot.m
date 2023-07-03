@@ -1,4 +1,10 @@
 function [] = ApplicationProgressionPlot(file_name, top_headings, bottom_headings)
+%This particular function produces THREE different plots:
+%
+%1. A plot of the overall application progression through the recruitment stages
+%2. A plot of how many students submitted different numbers of applications
+%3. A plot how many students were offered different numbers of roles.
+
     table_raw = readtable(file_name);
     table = table2cell(table_raw);
     
