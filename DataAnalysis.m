@@ -70,7 +70,7 @@ if strcmp(file_name(1), '"')
 end
 
 %if recruitment plot is wanted, parse top and bottom spreadsheet headers
-if plot_number >= 7 && plot_number <= 16 && plot_number ~= 14
+if plot_number >= 8 && plot_number <= 17 && plot_number ~= 14
     [~, ~, raw_data] = xlsread(file_name);
     dimensions = size(raw_data);
     num_cols = dimensions(2);
@@ -78,7 +78,7 @@ if plot_number >= 7 && plot_number <= 16 && plot_number ~= 14
     for i = 1 : num_cols
         headings{i} = raw_data{1, i};
     end
-elseif plot_number >= 17 && plot_number <= 18 || plot_number == 14
+elseif plot_number >= 18 && plot_number <= 19 || plot_number == 14
     %if recruitment plot where employer data is needed, extract the bottom
     %headings as well because they contain the employer headings
     [~, ~, raw_data] = xlsread(file_name);
