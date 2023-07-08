@@ -36,6 +36,15 @@ function [] = SalaryPlot(file_name, headings)
         end
     end
     
+    %find the column number with the NZ residency data
+    residency_column_number = -1;
+    for i = 1 : length(headings)
+        if WithinWord('NZ residency', headings{i})
+            residency_column_number = i;
+            break;
+        end
+    end
+    
     %extract table dimensions (number of students)
     dimensions = size(table);
     num_students = dimensions(1);
@@ -49,6 +58,9 @@ function [] = SalaryPlot(file_name, headings)
     female_salaries = zeros(1, length(salaries));
     intern_salaries = zeros(1, length(salaries));
     grad_salaries = zeros(1, length(salaries));
+    %set up salary counters for different NZ residency statuses
+    residencies = {'NZ citizen', 'NZ permanent resident', 'Student visa', 'Work visa', 'Other'};
+    residency_salaries = zeros(length(residencies), length(salaries));
     
     %count number of students for each salary category
     for i = 1 : num_students
@@ -69,6 +81,13 @@ function [] = SalaryPlot(file_name, headings)
                         intern_salaries(j) = intern_salaries(j) + 1;
                     elseif WithinWord('graduate', table{i, prog_column_number})
                         grad_salaries(j) = grad_salaries(j) + 1;
+                    end
+                    %count towards NZ residency based data
+                    for k = 1 : length(residencies)
+                        if strcmp(table{i, residency_column_number}, residencies{k})
+                            residency_salaries(k, j) = residency_salaries(k, j) + 1;
+                            break;
+                        end
                     end
                     found = 1;
                     break;
@@ -110,7 +129,7 @@ function [] = SalaryPlot(file_name, headings)
         end
         %if either the intern or grad count is non-zero, include that in
         %the programme based plot
-        if round((intern_salaries(i) / sum(intern_salaries)) * 100, 2) ~= 0
+        if round((intern_salaries(i) / sum(intern_salaries)) * 100, 2) ~= 0 || round((grad_salaries(i) / sum(grad_salaries)) * 100, 2) ~= 0
             prog_options_index = prog_options_index + 1;
             final_prog_salaries{prog_options_index} = salaries{i};
             intern_proportions(prog_options_index) = round((intern_salaries(i) / sum(intern_salaries)) * 100, 2);
@@ -161,6 +180,7 @@ function [] = SalaryPlot(file_name, headings)
     for i = 1 : length(ordinal_gender_salaries)
         colours = [colours; colour];
     end
+    
     %plot the data for gender based salary data
     figure(2);
     subplot(1, 2, 1);
@@ -189,6 +209,7 @@ function [] = SalaryPlot(file_name, headings)
     title('Percentages of female students receiving salaries for their roles');
     xlabel('Salary');
     ylabel('Percentage of female students');
+    
     %plot the actual data with colours and percent symbols generated, for the intern/grad salary data
     figure(3);
     %generate random colour for intern based salary data
