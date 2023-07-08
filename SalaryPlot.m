@@ -102,10 +102,11 @@ function [] = SalaryPlot(file_name, headings)
     
     %ensure only salaries with a count greater than zero are plotted, for
     %both the overall salary statistics and gender based salary statistics
-    final_salaries = {};
+    %and nz residency based statistics
     overall_options_index = 0;
     gender_options_index = 0;
     prog_options_index = 0;
+    final_salaries = {};
     final_gender_salaries = {};
     final_prog_salaries = {};
     salary_proportions = [];
@@ -113,6 +114,7 @@ function [] = SalaryPlot(file_name, headings)
     female_proportions = [];
     intern_proportions = [];
     grad_proportions = [];
+    residency_proportions = {};
     for i = 1 : length(salary_counters)
         if round((salary_counters(i) / sum(salary_counters)) * 100, 2) ~= 0
             overall_options_index = overall_options_index + 1;
@@ -135,13 +137,19 @@ function [] = SalaryPlot(file_name, headings)
             intern_proportions(prog_options_index) = round((intern_salaries(i) / sum(intern_salaries)) * 100, 2);
             grad_proportions(prog_options_index) = round((grad_salaries(i) / sum(grad_salaries)) * 100, 2);
         end
+        %calculate residency salary proportions for all residencies
+        for j = 1 : length(residencies)
+            residency_proportions{j}(i) = round((residency_salaries(j, i) / sum(residency_salaries(j, :))) * 100, 2);
+        end
     end
     
+    ordinal_all_salaries = categorical(salaries);
     ordinal_final_salaries = categorical(final_salaries); %convert strings to categorical type
     ordinal_gender_salaries = categorical(final_gender_salaries);
     ordinal_prog_salaries = categorical(final_prog_salaries);
     
     %reorder the salary categories because categorical() alphabetises them by default
+    ordinal_all_salaries = reordercats(ordinal_all_salaries, salaries);
     ordinal_final_salaries = reordercats(ordinal_final_salaries, final_salaries);
     ordinal_gender_salaries = reordercats(ordinal_gender_salaries, final_gender_salaries);
     ordinal_prog_salaries = reordercats(ordinal_prog_salaries, final_prog_salaries);
@@ -161,6 +169,10 @@ function [] = SalaryPlot(file_name, headings)
     prog_percent_arr = '';
     for i = 1 : length(intern_proportions)
         prog_percent_arr = [prog_percent_arr; '%'];
+    end
+    all_percent_arr = '';
+    for i = 1 : length(salary_counters)
+        all_percent_arr = [all_percent_arr; '%'];
     end
     
     %plot the actual data with colours and percent symbols generated, for the overall salary data
@@ -247,4 +259,30 @@ function [] = SalaryPlot(file_name, headings)
     title('Percentages of students receiving salaries for their roles: Graduate Roles');
     xlabel('Salary');
     ylabel('Percentage of students');
+    
+    %plot the salary data for NZ residencies
+    for i = 1 : length(residencies)
+        %don't plot if there is no data for the residency status
+        if sum(residency_salaries(i, :)) == 0
+            continue;
+        end
+        figure(3 + i);
+        colour = rand(1, 3);
+        colours = [];
+        for j = 1 : length(ordinal_all_salaries)
+            colours = [colours; colour];
+        end
+        bar_plot = bar(ordinal_all_salaries, residency_proportions{i}, 'facecolor', 'flat');
+        bar_plot.CData = colours; %colour in the bars for the bar plot
+        %set the upper and lower limits of the y-axis numbers
+        limits = ylim;
+        ylim([0, min([100, max([limits(2), max(residency_proportions{i}) + 5, max(residency_proportions{i}) * 1.1])])]);
+        text(1 : length(residency_proportions{i}),...
+            residency_proportions{i},...
+            [num2str(residency_proportions{i}'), all_percent_arr],...
+            'vert', 'bottom', 'horiz', 'center'); %add text labels for the percentage to each bar
+        title('Percentages of students receiving salaries for their roles: ', residencies{i});
+        xlabel('Salary');
+        ylabel('Percentage of students');
+    end
 end
