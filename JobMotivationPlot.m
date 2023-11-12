@@ -32,6 +32,7 @@ function [] = JobMotivationPlot(file_name, headings)
                 if WithinWord(motivation_synonyms{j}{k}, table{i, column_number})
                     motivation_counters(j) = motivation_counters(j) + 1;
                     found = 1;
+                    break;
                 end
             end
         end
