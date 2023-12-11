@@ -24,7 +24,7 @@ function [] = FoundOutMethodPlot(file_name, time_period_num)
 
     dimensions = size(table);
     num_students = dimensions(1);
-    methods = {'Business School Website', 'BizStudent Update (email)', 'Workshop or event', 'Plasma screen'};
+    methods = {'Business School Website', 'BizBuzz (student newsletter)', 'Social Media', 'MyCDES', 'BizStudent Update (email)', 'Workshop or event', 'Plasma screen'};
     methods_count = zeros(1, length(methods)); %initialise method counters to zero
     other_count = 0; %count how many entries are 'other'
     num_students_time_period = 0; %counts the number of students that fall within the time period requested
