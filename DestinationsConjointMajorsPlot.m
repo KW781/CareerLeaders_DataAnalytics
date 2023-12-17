@@ -20,19 +20,30 @@ function [] = DestinationsConjointMajorsPlot(file_name)
     %count the majors studied by the graduates
     for col = column_number : column_number + 2
         for row = 1 : num_students
-            %check whether current major already exists in the array
-            match = 0;
-            for i = 1 : length(majors)
-                if strcmpi(table{row, col}, majors)
-                    major_counters(i) = major_counters(i) + 1;
-                    match = 1;
-                    break;
-                end
+            %check whether the current element in table is null or not
+            null = isnan(table{row, col}); %will return an array for character vectors, so following check must be done
+            if length(null) > 1
+                null = 0;
             end
-            %add new major to the array if there's no match
-            if ~match
-                majors{length(majors) + 1} = table{row, col};
-                major_counters(length(major_counters) + 1) = 1;
+            if length(null) == 0
+                null = 1; %set to null if the element is an empty string
+            end
+            
+            if ~strcmp(table{row, col}, '') && ~null
+                %check whether current major already exists in the array
+                match = 0;
+                for i = 1 : length(majors)
+                    if strcmpi(table{row, col}, majors)
+                        major_counters(i) = major_counters(i) + 1;
+                        match = 1;
+                        break;
+                    end
+                end
+                %add new major to the array if there's no match
+                if ~match
+                    majors{length(majors) + 1} = table{row, col};
+                    major_counters(length(major_counters) + 1) = 1;
+                end
             end
         end
     end
