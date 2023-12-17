@@ -56,7 +56,7 @@ function [] = DestinationsConjointMajorsPlot(file_name)
         if round((major_counters(i) / num_students) * 100, 2) ~= 0
             options_index = options_index + 1;
             final_majors{options_index} = majors{i};
-            major_proportions(options_index) = round((major_counters(i) / num_students) * 100, 2);
+            major_proportions(options_index) = round((major_counters(i) / sum(major_counters)) * 100, 2);
         end
     end
     
