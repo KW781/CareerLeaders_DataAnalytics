@@ -33,7 +33,7 @@ function [] = DestinationsConjointMajorsPlot(file_name)
                 %check whether current major already exists in the array
                 match = 0;
                 for i = 1 : length(majors)
-                    if strcmpi(table{row, col}, majors)
+                    if strcmpi(table{row, col}, majors{i})
                         major_counters(i) = major_counters(i) + 1;
                         match = 1;
                         break;
